@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>demo</title>
+<script src="../demo-public/js/jquery.js"></script>
+</head>
+<body>
+<style>
+	hr{height: 10px; background: #ccc;}
+</style>
+<!--
+*demo1 pager
+*use *display:inline;*zoom:1; for IE7
+*inline-block
+-->
+<style>
+	.page{width:500px; height:32px; border:1px solid blue; margin-left:auto; margin-right:auto; text-align:center;}
+	.page div{display:inline-block; *display:inline; *zoom:1; width:30px; height:30px; margin-right:3px; 
+		background:red; border:1px solid green; border-radius:3px;color:#fff; vertical-align:middle;}	
+</style>
+<div class="page">
+	<div>1</div><div>2</div><div>3</div><div>4</div>
+</div>
+<hr />
+
+<!--
+*demo2 images
+*use *display:inline;*zoom:1; for IE7
+*inline-block & ref the width is little?
+-->
+<style>
+	.imgBox{width:200px; height:150px;  margin:auto; background:#ccc; text-align:center; overflow: auto;}
+	.imgBox img,.imgBox span{display:inline-block; *display:inline;*zoom:1;vertical-align:middle;height: auto;}
+	.imgBox img{max-width: 80%;}
+	.imgBox span{height:100%;}
+</style>
+<div class="imgBox">
+	<img src="../demo-public/images/ss.jpg" alt="avatar" />
+	<span class="ref"></span>
+</div>
+<hr />
+
+<!--
+*demo3 layout
+*use position:absolute; and top,bottom,left,right
+*top left bottom
+-->
+<style>
+	.box{width: 700px; margin-left: auto; margin-right: auto; position: relative;}
+	.left{position: absolute; width: 200px; top: 0; left: 0; bottom: 0; background: blue;}
+	.right{margin-left: 200px; background: green;height: 500px;}
+</style>
+<div class="box">
+	<div class="left"></div>
+	<div class="right"></div>
+</div>
+<hr />
+
+<!--
+*demo4 clear float
+*use overflow:hidden
+*
+-->
+<style>
+	.box4{width: 700px; margin-left: auto; margin-right: auto;}
+	.box4 .left4{float: left; width: 120px; height: 120px; background: blue;}
+	.box4 .right4{overflow: hidden;}/*margin-left:150px;*/
+</style>
+<div class="box4">
+	<div class="left4"></div>
+	<div class="right4">
+		这一个系列之前，我定位是与高效学习有关，不写生活但是会涉及一点点生活，第一版不要求整个系列有严密逻辑但是每篇文章一定保持高内聚结构。总体方向确定，但是真的在我现在提笔开始写的时候，我却停了一下。学习这个话题太多了，之前也写过一些相关的文字，加上后面新的经验和感悟，我该从哪和大家说起呢？这一个系列之前，我定位是与高效学习有关，不写生活但是会涉及一点点生活，第一版不要求整个系列有严密逻辑但是每篇文章一定保持高内聚结构。总体方向确定，但是真的在我现在提笔开始写的时候，我却停了一下。学习这个话题太多了，之前也写过一些相关的文字，加上后面新的经验和感悟，我该从哪和大家说起呢？这一个系列之前，我定位是与高效学习有关，不写生活但是会涉及一点点生活，第一版不要求整个系列有严密逻辑但是每篇文章一定保持高内聚结构。总体方向确定，但是真的在我现在提笔开始写的时候，我却停了一下。学习这个话题太多了，之前也写过一些相关的文字，加上后面新的经验和感悟，我该从哪和大家说起呢？
+	</div>
+</div>
+<hr />
+
+
+<!--
+*demo5 bind live delegate on
+*use on
+*
+-->
+<style>
+	#bind,#live,#delegate,#on{display: inline-block; width: 100px; height: 100px; border: 1px solid #ccc;}
+	.a{width: 80px; height: 80px; border: 1px solid #ccc;}
+	.b{width: 60px; height: 60px; border: 1px solid #ccc; text-align: center;}
+	#bind .a .b span{}
+	.red{border: 1px solid red;}
+</style>
+<div id="bind">
+	<div class="a">
+		<div class="b">
+			<span>bind</span>
+		</div>
+	</div>
+</div>
+
+<div id="live">
+	<div class="a">
+		<div class="b">
+			<span>live</span>
+		</div>
+	</div>
+</div>
+
+<div id="delegate">
+	<div class="a">
+		<div class="b">
+			<span>delegate</span>
+		</div>
+	</div>
+</div>
+
+<div id="on">
+	<div class="a">
+		<div class="b">
+			<span>on</span>
+		</div>
+	</div>
+</div>
+<hr />
+
+<script>
+	$(document).ready(function () {
+		//bind
+		$('#bind .a .b span').bind('click',function(){
+			$(this).addClass('red').after('<span>bind</span>');
+		});
+		//live
+		// $('#live .a .b span').live('click',function(){
+		// 	$(this).addClass('red').after('<span>live</span>');
+		// });
+		//delegate
+		$('#delegate').delegate('span','click', function(){
+			$(this).addClass('red').after('<span>delegate</span>');
+		});
+		//on
+		$('#on').on('click', 'span', function(){
+			$(this).addClass('red').after('<span>on</span>');
+		});
+	});
+	//slecter use ID
+</script>
+</body>
+</html>

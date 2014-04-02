@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css3 动画之transition</title>
+</head>
+<body>
+	<style>
+		.transition-box div{
+			width: 100px; height: 100px; background: #4bf;
+			display: inline-block; *display: inline; *zoom: 1; margin-right: 30px;
+		}
+		.linear:hover,.ease:hover,.ease-in:hover,.ease-in-out:hover,.ease-out:hover{
+			width: 150px;
+			height: 150px;
+			background: #f66;
+			opacity: .5;
+		}
+		.linear{
+			-webkit-trasition:all .5s linear 0;
+			  -moz-transition:all .5s linear 0;
+			    -o-transition:all .5s linear 0;
+				   transition:all .5s linear 0;
+		}
+		.ease{
+			-webkit-trasition:all .5s ease 0;
+			  -moz-transition:all .5s ease 0;
+			    -o-transition:all .5s ease 0;
+				   transition:all .5s ease 0;
+		}
+		.ease-in{
+			-webkit-trasition:all .5s ease-in 0;
+			  -moz-transition:all .5s ease-in 0;
+			    -o-transition:all .5s ease-in 0;
+				   transition:all .5s ease-in 0;
+		}
+		.ease-in-out{
+			-webkit-trasition:all .5s ease-in-out 0;
+			  -moz-transition:all .5s ease-in-out 0;
+			    -o-transition:all .5s ease-in-out 0;
+				   transition:all .5s ease-in-out 0;
+		}
+		.ease-out{
+			-webkit-trasition:all .5s ease-out 0;
+			  -moz-transition:all .5s ease-out 0;
+			    -o-transition:all .5s ease-out 0;
+				   transition:all .5s ease-out 0;
+		}
+	</style>
+
+	<div class="transition-box">
+		<div class="linear">linear</div>
+		<div class="ease">ease</div>
+		<div class="ease-in">ease-in</div>
+		<div class="ease-in-out">ease-in-out</div>
+		<div class="ease-out">ease-out</div>
+	</div>
+
+	<div class="img"><img src="transition-timing-function.png" alt=""></div>
+
+	<pre>
+		css3的transition和transform必要的两个属性
+		transition对标签的变化过程进行设置。
+		transition-property 要变化的属性
+		transition-duration 变化的速度 单位s
+		transition-timing-function 贝塞尔曲线的方式渐变
+		transition-delay 是否延迟执行变化 单位s
+
+		css的transition允许css的属性值在一定的时间区间内平滑过渡。这种效果可以在鼠标单击，获得焦点，备件点击或对元素任何改变中触发，并圆滑地以动画效果改变css的属性值。
+	</pre>
+
+</body>
+</html>

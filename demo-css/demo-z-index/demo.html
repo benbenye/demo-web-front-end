@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>z-index</title>
+	<script src="../demo-public/js/jquery.js"></script>
+</head>
+<body>
+<style>
+	/*本周热门人物+圈内感兴趣的朋友*/
+.user-v-p{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(http://www.xinpianchang.com/public/images/header_pub.png) no-repeat transparent;
+	background-position: -30px -70px;
+	right: 8px;
+	top: 34px;
+}
+.member-lists,.member-lists li{margin: 0; padding: 0; list-style: none; width: 300px;}
+.member-lists li{position: relative; margin-bottom: 10px;}
+.member-lists li .member-lists-title{ float: left; margin-right: 10px; width: 54px; height: 54px; position: relative;}
+.member-lists li .member-lists-title a.user-v-p{position: absolute; right: -3px; top:41px;}
+.member-lists li .member-lists-title img{vertical-align: top;}
+.member-lists li span{display: block;}
+.member-lists li a.guanzhu{float: right;}
+</style>
+	<div class="sidebar-item" style="background-color: #FDF0D5;color:#F7B42C;margin-top:40px;">
+		<span class="sidebar-title" style="background-position: -205px -104px;"></span>
+		<span>你可能感兴趣的圈内朋友</span>
+	</div>
+	<ul class="member-lists" id="maybe">
+		<li>
+			<div class="member-lists-title">
+				<a href="" class="member-lists-img"><img src="http://www.xinpianchang.com/uploadfile/user/2014/03/06/5318598255716_54.jpeg" alt="" /></a>
+				<a href="http://local.xinpianchang.com/user/userverify/ts-intro" target="_blank" class="user-v-p" title="个人认证"></a>	
+			</div>
+			<span>周有</span>
+			<span>周有<a class="guanzhu" href="#">+关注</a></span>
+			<span>周有</span>
+			
+		</li>
+		<li>
+			<div class="member-lists-title">
+				<a href="" class="member-lists-img"><img src="http://www.xinpianchang.com/uploadfile/user/2014/03/06/5318598255716_54.jpeg" alt="" /></a>
+				<a href="http://local.xinpianchang.com/user/userverify/ts-intro" target="_blank" class="user-v-p" title="个人认证"></a>	
+			</div>
+			<span>周有</span>
+			<span>周有<a class="guanzhu" href="#">+关注</a></span>
+			<span>周有</span>
+			
+		</li>
+	</ul>
+
+<!--  tab  -->
+<ul id="tab">
+	<li name='n1'>1</li>
+	<li>2</li>
+	<li name="n3">3</li>
+</ul>
+<div id="con">
+	<ul>
+		<li>11</li>
+		<li>11</li>
+		<li>11</li>
+	</ul>
+
+	<ul>
+		<li>22</li>
+		<li>22</li>
+		<li>22</li>
+	</ul>
+	<ul>
+		<li>33</li>
+		<li>33</li>
+		<li>33</li>
+	</ul>
+</div>
+<script>
+$(document).ready(function(){
+	$('#tab li').click(function () {
+		var num = $(this).index();
+		// $('#con ul:eq('+num+')').show().siblings().hide();
+		$('#con ul').get(num).show().siblings().hide();
+	});
+});
+</script>
+</body>
+</html>

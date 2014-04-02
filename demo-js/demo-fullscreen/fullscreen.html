@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="../demo-public/js/jquery.js"></script>
+<style>
+	#photo-view-fullbg{position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.9);}
+	.photo-view{width: 1200px; margin-left: auto; margin-right: auto;height: 300px;}
+	.photo-main{float: left; width: 780px; height: 300px; background: #fff; position: relative;}
+	.photo-side{float: left; width: 420px; height: 300px; background: red;}
+	#btn{position: absolute; width: 30px; background: yellow; height: 30px;}
+</style>
+</head>
+<body>
+<script>
+	$(document).ready(function(){
+		//调出全屏图片
+		$('#img').click(function(){
+			$("<div id='photo-view-fullbg'><div class='photo-view'><div class='photo-main'><div id='btn'></div></div><div class='photo-side'></div></div></div>").appendTo('#img-fullscreen');
+		});
+		//关闭
+		$('#img-fullscreen').on('click','#photo-view-fullbg', function(event) {
+			//event.stopPropagation();
+			$(this).detach();
+		});
+		$('#img-fullscreen').on('click','#btn',function(){
+			alert('s');
+		});
+		$('#img-fullscreen').on('click','.photo-view',function(){
+			return false;
+		});
+	});
+</script>
+<img id="img" src="../demo-public/images/ss.jpg" alt="" />
+<div id="img-fullscreen"></div>
+</body>
+</html>

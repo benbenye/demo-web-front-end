@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>z-index</title>
+	<script src="../demo-public/js/jquery.js"></script>
+</head>
+<body>
+<!--  tab  -->
+<ul id="tab">
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+</ul>
+<div id="con">
+	<ul>
+		<li>11</li>
+		<li>11</li>
+		<li>11</li>
+	</ul>
+
+	<ul>
+		<li>22</li>
+		<li>22</li>
+		<li>22</li>
+	</ul>
+	<ul>
+		<li>33</li>
+		<li>33</li>
+		<li>33</li>
+	</ul>
+</div>
+<script>
+$(document).ready(function(){
+	$('#tab li').click(function () {
+		var num = $(this).index();
+		$('#con ul:eq('+num+')').show().siblings().hide();
+		// $('#con ul').get(num).show().siblings().hide();
+	});
+});
+</script>
+</body>
+</html>
