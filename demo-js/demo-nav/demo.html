@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航条显隐动画</title>
+<style>
+	body{font-size: 1.4rem; margin: 0; padding:0;}
+	ul{margin: 0; padding: 0;}	
+	.ease-in-out{
+		-webkit-trasition:all .5s ease-in-out 0;
+		  -moz-transition:all .5s ease-in-out 0;
+		    -o-transition:all .5s ease-in-out 0;
+			   transition:all .5s ease-in-out 0;
+	}
+/* header样式 */
+.header{width: 100%;height: 28px;background: #222;font-family: Helvetica,Arial,sans-serif;font-size: 12px; position: fixed;top: 0;}
+.header-main{width: 100%;max-width: 1180px;margin-left: auto;margin-right: auto;}
+.header-left li{float: left;line-height: 28px;height: 28px;}
+.header-left li a{display: inline-block;*display: inline;zoom: 1; padding: 0 12px;color: #d5d5d5;}
+.header-left li a:hover,.header-right li a:hover,.header a.sel{color: #FFF;}
+.header-right li{float: right;line-height: 28px;}
+.header-right li a{display: block;padding: 0 12px;color: #d5d5d5;}
+
+.header-left li a.header-msg{
+	display: inline-block;*display: inline;zoom: 1;vertical-align: top;margin-top: 5px;
+	margin-left:-8px;line-height: 18px;height: 18px;padding: 0 4px;border-radius: 2px;
+	background-color: #e74c3c;color: #FFF;position: relative;
+}
+.header-left li .header-msg:before{
+	display:block;width:0;height:0;content:"";position:absolute;right: 100%;
+	top: 50%;margin-top: -4px;border-style: solid;
+	border-width: 4px 6px 4px 0;border-color: transparent;border-right-color: #e74c3c;
+}
+.header-left li .dn{display: none!important;}
+
+/* 首页导航条带图片轮播 */
+.fix-wrap{
+	width: 100%;height: 34px;line-height: 34px;
+	padding: 15px 0;background-color: #F9F9F9;position: relative;z-index: 100;
+}
+.fix-wrap a{color: #333;}
+.fix-list{float: left;position: relative;font-size: 15px;}
+.fix-item{float: left;margin-right: 10px;}
+.fix-item a{display: block;padding: 0 10px 15px 10px;color: #333;}
+.fix-item a:hover{font-weight: bold;}
+.fix-item-more{float: left;}
+.fix-sel{font-weight: bold;}
+
+.fix-move{position: absolute;left: 0;bottom: 0;height: 4px;background-color: #3498DB;}
+
+.fix-wrap .index-tip span{background-color: #E74C3C;color: #FFF;}
+
+.index-header{
+	position: relative;width: 100%;max-width: 1440px;height: 500px;margin-left: auto;margin-right: auto;
+
+		margin-top: 28px;
+}
+.index-nav a{color: #FFF;}
+.index-nav a:hover{color: #D5D5D5;}
+.index-wrap{
+	position: absolute;z-index: 2;left: 0;top: 0;right: 0;background: #333;
+}
+.index-wrap-ease{background: #666;}
+.index-nav{
+	color: #FFF;height: 34px;line-height: 34px;
+	padding: 15px 0;max-width: 1180px;margin-left: auto;margin-right: auto;
+}
+.index-logo{display: block;width: 111px;height: 36px;float: left;margin-right: 40px;margin-left: 10px}
+.index-nav .index-logo img,.fix-main .index-logo img{width: 111px;height: 36px;}
+.index-nav-list{margin-left: -20px;float: left;font-size: 15px;}
+.index-nav-list>li{float: left;margin-left: 10px;}
+.index-nav-list li a{display: block;padding: 0 10px;}
+/*.index-nav-list li a:hover{font-weight: bold;}*/
+.index-nav-list li span i,.fix-item-more span i{
+	display: inline-block;*display: inline;zoom: 1;vertical-align: top;margin-top: 15px;*margin-top: 8px;
+	margin-left: 4px;
+	width: 10px;height: 6px;background: url(../images/nav-more.png) no-repeat;
+}
+.fix-item-more span i{background: url(../images/nav-black.png);}
+.index-item-more:hover{color: #D5D5D5;}
+.index-item-more:hover i{background: url(../images/nav-more-hover.png) no-repeat;}
+.fix-item-more:hover i{background-image: url(../images/nav-more-hover2.png);}
+.index-item-more,.fix-item-more{position: relative;z-index: 2;cursor: default;text-align: center;padding: 0 10px 16px;}
+.index-item-more .index-sub li a{color: #d5d5d5;}
+.index-item-more:hover .index-sub{left: -30px;top: 36px;opacity: 1;filter:alpha(opacity=100);}
+.fix-item-more:hover .fix-sub{left: -29px;top: 40px;opacity: 1;filter:alpha(opacity=100);}
+
+.index-tip{float: right;margin-right: 10px;}
+.index-tip span{
+	display: inline-block;*display: inline;zoom: 1;font-size: 12px;height: 20px;line-height: 20px;
+	*margin-top: 3px;background-color: #333;filter:alpha(opacity=85);
+	background-color: rgba(255, 255, 255, 0.2);margin-left: 6px;vertical-align: middle;border-radius: 2px;
+	padding: 0 6px;
+}
+.index-user{
+	float: right;position: relative;z-index: 10;width: 120px;height: 34px;padding-bottom: 16px;
+	margin-right: 10px;cursor: default;text-align: center;
+}
+.index-user .plus-v-p-14,.index-user .plus-v-c-14{
+	margin-top: 11px;margin-left: 2px;
+}
+.index-nav .index-user:hover{color: #D5D5D5;}
+.index-user .name{display: inline-block;*display: inline;zoom: 1;vertical-align: top;max-width: 100px;}
+.index-sub,.fix-sub{
+	position: absolute;left: 0;top: -9999px;opacity: 0;filter:alpha(opacity=0);
+	width: 120px;border-radius: 2px;box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.1);
+	background-color: #FFF;color: #333;font-size: 13px;
+}
+.index-wrap .index-sub{background-color: #333;}
+.index-sub a,.fix-sub a{color: #333;display: block;}
+.index-sub a:hover,.fix-sub a:hover{background-color: #F5F5F5;}
+.index-wrap .index-sub a{color: #d5d5d5;}
+.index-wrap .index-sub a:hover{background-color: #222;color: #fff;}
+.fix-wrap .index-user:hover .index-sub{top: 40px;opacity: 1;filter:alpha(opacity=100);}
+.index-wrap .index-user:hover .index-sub{top: 36px;opacity: 1;filter:alpha(opacity=100);}
+.index-user .index-sub a:hover{color: #333}
+.index-wrap .index-user .index-sub a:hover{color: #fff;}
+.index-left{box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);}
+.index-login{float: right;}
+.index-login a{margin-right: 20px;}
+.index-login a:last-child{margin-right: 10px;}
+
+.index-search{float: right;position: relative;display: block;*width:205px;height: 32px;margin-top: 1px;margin-right: 10px;}
+.index-search input{
+	background-color: #F1F1F1;background-color: rgba(241,241,241,.2);filter: alpha(opacity=40);
+	border: 1px solid rgba(204, 204, 204, .5);line-height: 20px;padding: 5px 40px 5px 10px;
+	vertical-align: top;
+	border-radius: 2px;
+}
+.index-search input:focus{background-color: rgba(241,241,241,.3);}
+.index-search-btn{
+	position: absolute;width: 32px;height: 32px;right: 0;top: 0;
+	background: url(../images/search-btn.png) no-repeat 8px 8px transparent;
+}
+.fix-wrap .index-search-btn{background: url(../images/search-btn-fix.png) no-repeat 8px 7px transparent;}
+
+.index-prev,.index-next{
+	position: absolute;z-index: 2;top: 50%;margin-top: -38px;
+	display: inline-block;*display: inline;zoom: 1;cursor: pointer;
+	width: 75px;height: 75px;
+}
+.index-prev{background-image: url(../images/prev.png);left: 20px;}
+.index-prev:hover{background-image: url(../images/prev-hover.png);}
+.index-next{background-image: url(../images/next.png);right: 20px;}
+.index-next:hover{background-image: url(../images/next-hover.png);}
+.index-header .dn{display: none;}
+.clearfix {
+zoom: 1;
+_height: 1px;
+}.clearfix:after {
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+</style>
+<script type="text/javascript" src="../../demo-public/js/jquery.js"></script>
+</head>
+<body>
+	<div class="header" id="header">
+		<div class="header-main clearfix">
+			<ul class="header-left fl clearfix">
+				<li>
+					<a href="/" title="V电影_最大的微电影平台" class="sel">V电影</a>
+				</li>
+				<li>
+					<a href="http://www.xinpianchang.com" title="新片场_服务新媒体影视" target="_blank">新片场</a>
+					<a href="http://www.xinpianchang.com/message/my/ts-" data-srcurl="http://www.xinpianchang.com/message/my/ts-" target="_blank" class="header-msg dn" title="新片场消息" id="xpc-notice-num">0</a>
+				</li>
+				<li>
+					<a href="/app" class="" target="_blank" title="V电影客户端">客户端</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="index-header">
+		<div class="index-wrap clearfix ease-in-out" id="index-wrap">
+			<div class="index-nav">
+				<a href="/" title="V电影_最大的微电影平台" class="index-logo"><img src="/Public/Home/images/white-logo.png" alt="V电影_最大的微电影平台"></a>
+				<ul class="index-nav-list clearfix">
+					<li><a href="/" title="微电影首页">首页</a></li>
+					<li><a href="/channel" title="微电影频道">频道</a></li>
+					<li><a href="/album" title="微电影专题">专题</a></li>
+					<li><a href="/series" title="系列">系列</a></li>
+					<li><a href="/backstage" title="微电影幕后">幕后</a></li>
+					<li class="index-item-more">
+						<span>更多<i></i></span>
+						<ul class="index-sub">
+							<li><a href="http://party.vmovier.com" target="_BLANK" title="微电影活动">活动</a></li>
+							<li><a href="/industry" title="微电影行业">行业</a></li>
+						</ul>
+					</li>
+				</ul>
+				 <a href="/user/notice" class="index-tip">提醒<span class="msg-num">0</span></a>
+			        <div class="index-user">
+			            <span class="name odt">尹兴良</span><span class="plus-v-p-14"></span>
+			            <ul class="index-sub">
+			                <li><a href="/personal/15">我的主页</a></li>
+			                <li><a href="/user">个人设置</a></li>
+			                 <li><a target="_blank" href="/admin/index/index">后台管理</a></li>		                <li><a href="/user/logout">退出</a></li>
+			            </ul>
+			        </div>
+			        			<form class="index-search" id="search-form" action="/search">
+					<input type="text" name="kw">
+					<a onclick="getElementById('search-form').submit();" href="javascript:;" class="index-search-btn"></a>
+				</form>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			var scrollTop = $(window).scrollTop();
+			if(scrollTop >=30){
+				$('#header').fadeOut('slow');
+				$('#index-wrap').css({position:'fixed'}).addClass('index-wrap-ease');
+			}
+			if(scrollTop <=29){
+				$('#header').fadeIn('slow');
+				$('#index-wrap').css({position:'absolute'}).removeClass('index-wrap-ease');
+			}
+		});
+	});   
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="yes" name="apple-touch-fullscreen"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=yes,width=344">
+	<script src="../../../demo-public/js/jquery.js"></script>
+	<title>dulife</title>
+	<style>
+		a{text-decoration: none;color: #e1e1e1;}
+		a:hover{color: #e5bb5c;}
+		i{font-style: normal;}
+		ul{padding: 0;margin: 0;list-style: none;}
+		h1,h2,h3,h4,h5,h6{font-weight: normal;margin: 0;}
+		img{border: 0;}
+		p{margin: 0;}
+		body{background: #3e3e3e;margin: 0;}
+		.wrapper{position: relative; overflow: hidden;}
+		.block{position: absolute; top: 0;}
+		.block img{width: 100%; vertical-align: top;}
+		.content {position: absolute; top: 0; left: 0; right: 0; width: 50%; margin-right: auto; margin-left: auto;}
+		.content img{width: 100%;}
+		.arrow-down{width: 41px; height: 41px; margin-right: auto; margin-left: auto; background: url(images/arrow-down.png) no-repeat; background-size: contain;}
+	</style>
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+	<div class="block" id="block">
+		<div class="block1"><img src="images/block1.jpg" alt=""></div>
+		<div class="block2"><img src="images/block2.jpg" alt=""></div>
+		<div class="block3"><img src="images/block3.jpg" alt=""></div>
+		<div class="block4"><img src="images/block4.jpg" alt=""></div>
+		<div class="block5"><img src="images/block5.jpg" alt=""></div>
+	</div>
+	<div class="content" id="content">
+		<div class="content1"><img src="images/content1.png" alt=""><div class="arrow-down"></div></div>
+		<div class="content2"><img src="images/content2.png" alt=""><div class="arrow-down"></div></div>
+		<div class="content3"><img src="images/content3.png" alt=""><div class="arrow-down"></div></div>
+		<div class="content4"><img src="images/content4.png" alt=""><div class="arrow-down"></div></div>
+		<div class="content5"><img src="images/content5.png" alt=""><div class="arrow-down"></div></div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			var height = $(window).height();
+			$('#wrapper').css({height:height+'px'});
+			$(window).mousewheel(function(){
+				var top_block = parseInt($('#block').css('top')),
+					top_content = parseInt($('#content').css('top'));
+				console.log(top_block);
+				$('#block').css({top:top_block-500 +'px'});
+			});
+		});
+	</script>
+</div></body>
+</html>

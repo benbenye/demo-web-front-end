@@ -1,0 +1,256 @@
+//dulife
+(function($) {
+
+    var dulife = window.dulife = {};
+
+    var _escape = dulife.escape = function(string) {
+        return (''+string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;');
+    };
+
+    var templateSettings = {
+        evaluate    : /<%([\s\S]+?)%>/g,
+        interpolate : /<%=([\s\S]+?)%>/g,
+        escape      : /<%-([\s\S]+?)%>/g
+    };
+    var noMatch = /.^/;
+
+    dulife.template = function(str, data) {
+        var c  = templateSettings;
+        var tmpl = 'var __p=[],print=function(){__p.push.apply(__p,arguments);};' +
+            'with(obj||{}){__p.push(\'' +
+            str.replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'")
+                .replace(c.escape || noMatch, function(match, code) {
+                    return "',_escape(" + unescape(code) + "),'";
+                })
+                .replace(c.interpolate || noMatch, function(match, code) {
+                    return "'," + unescape(code) + ",'";
+                })
+                .replace(c.evaluate || noMatch, function(match, code) {
+                    return "');" + unescape(code).replace(/[\r\n\t]/g, ' ') + ";__p.push('";
+                })
+                .replace(/\r/g, '\\r')
+                .replace(/\n/g, '\\n')
+                .replace(/\t/g, '\\t')
+            + "');}return __p.join('');";
+        var func = new Function('obj', '_escape', tmpl);
+        if (data) return func(data, _escape);
+        return function(data, _escape) {
+            return func.call(this, data, _escape);
+        };
+    };
+
+    var weiboShare = {
+        site: 'http://dulife.baidu.com',
+        pic: 'http://dulife.baidu.com/wp-content/themes/dulife/images/wb-share.jpg',
+        url: 'http://service.weibo.com/share/share.php?appkey=1343713053',
+        prefix: '#百度dulife健康云礼物送到家# ',
+        suffix: ' 快来百度dulife官网抢可穿戴设备好礼！@百度dulife'
+    };
+
+    weiboShare.url += '&url=' + encodeURIComponent(weiboShare.site)
+        + '&pic=' + encodeURIComponent(weiboShare.pic);
+
+    var comment = dulife.comment = {
+        submitComment: function() {
+            var form = $('#commentForm');
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(res) {
+                    res = JSON.parse(res);
+                    if (res.error) {
+                        alert(res.error);
+                    } else {
+                        res.children = null;
+                        var html = dulife.template(comment.commentTpl, res);
+                        if ($('#adminReply').length) {
+                            $('#adminReply').after(html);
+                        } else {
+                            $('#commentList').prepend(html);
+                        }
+                        form.find('textarea').val('');
+                    }
+                }
+            });
+        },
+
+        validForm: function() {
+            if (!dulife.islogin) {
+                dulife.login();
+                return false;
+            }
+            var comment = $.trim($('#commentForm').find('textarea').val());
+            if (!comment) {
+                alert('请输入评论内容！');
+                return false;
+            }
+            return true;
+        },
+
+        loadComments: function() {
+            this.currentPage ++;
+            $.ajax({
+                type: 'GET',
+                url: '/wp-admin/admin-ajax.php',
+                data: {
+                    action: 'load_comments',
+                    pn: comment.currentPage,
+                    post_id: comment.post_id,
+                    limit: comment.limit
+                },
+                success: function(res) {
+                    var html = '', res = JSON.parse(res);
+                    $.each(res.comments, function(idx, item) {
+                        html += dulife.template(comment.commentTpl, item);
+                    });
+                    $('#commentList').append(html);
+                    if (comment.currentPage * comment.limit >= res.total) {
+                        $('.load-more').hide();
+                    } else {
+                        $('.load-more').show();
+                    }
+                }
+            });
+        },
+
+        init: function() {
+            this.currentPage = 0;
+            this.limit = 10;
+            this.post_id = $('#comment_post_ID').val();
+            this.commentTpl = $('#commentListTpl').html();
+            this.loadComments();
+            $('#loadMore').click(function() {
+                comment.loadComments();
+            });
+            $('#commentForm').submit(function(e) {
+                e.preventDefault();
+                if(!comment.validForm()) return;
+                comment.submitComment();
+            });
+            $('#wbShare').click(function(e) {
+                e.preventDefault();
+                if(!comment.validForm()) return;
+                comment.submitComment();
+                var url = weiboShare.url;
+                var content = $('#commentForm').find('textarea').val();
+                url += '&title=' + encodeURIComponent(weiboShare.prefix + content + weiboShare.suffix);
+                window.open(url, '_blank');
+            });
+        }
+    };
+
+    var tab = dulife.tab = {};
+
+    tab.init = function() {
+        $('.tabs a').click(function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $targetTab = $($this.attr('href'));
+            $this.closest('.tabs').find('.tab-current').removeClass('tab-current');
+            $this.parent().addClass('tab-current');
+            $targetTab.closest('.tabs-pane').find('.tab-pane').removeClass('tab-current');
+            $targetTab.addClass('tab-current');
+
+            if($this.attr('href') == '#tab1')
+                $('.comment-pane').show();
+            else
+                $('.comment-pane').hide();
+        });
+    };
+
+    tab.show = function(paneId) {
+        $('.tab').removeClass('tab-current');
+        $('.tab>[href=' + paneId + ']').parent().addClass('tab-current');
+        $('.tab-pane').removeClass('tab-current');
+        $(paneId).addClass('tab-current');
+    }
+
+    var picshow = dulife.picshow = {};
+    picshow.init = function() {
+        var $deviceImgs = $('.device-detail .pictures li');
+        $deviceImgs.mouseover(function() {
+            $deviceImgs.removeClass('curr');
+            var src = $(this).addClass('curr').find('img').attr('src');
+            $('.device-detail .picture img').attr('src', src);
+        });
+    }
+
+    var backTop = dulife.backTop = {
+        init: function() {
+            var me = this;
+            var $page = $(document);
+            this.$el = $('#backTop');
+            var posRight = ($(window).width() + 980) / 2 + 100;
+            var posBottom = 180;
+            this.$el.css({left:posRight, bottom: posBottom});
+            $(window).scroll(function() {
+                me.$el[$page.scrollTop() > 500 ? 'show' : 'hide']();
+            });
+            this.$el.click(function() {
+                $('body,html').animate({scrollTop: 0});
+            });
+        }
+    };
+
+    var slideBar = dulife.slideBar = {
+        init: function(){
+            var ncon = $('#ncon'), prev = $('#prev'), next = $('#next'),
+            list = ncon.find('li'), num = 4, len = list.length,
+            dist = list[1].offsetLeft - list[0].offsetLeft, arr = [0, len - num], idx = 0;
+            ncon.width(dist * len);
+            if (len <= num) {
+                return;
+            }
+            var changeNum = function(n) {
+                if (n > arr[1] || n < arr[0]) {
+                    return;
+                }
+                prev[((n == 0) ? 'add' : 'remove') + 'Class']('uprev');
+                next[((n == arr[1]) ? 'add' : 'remove') + 'Class']('unext');
+                idx = n;
+                ncon.stop().animate({left: -n * dist}, 500);
+            }
+            list.each(function(){
+                var self = $(this);
+                if(self.hasClass('nav-cur')){
+                    var i = self.index() + 1;
+                    changeNum(i - num);
+                }
+            });
+            prev.on('click', function () {
+                changeNum(idx - 1);
+                return false;
+            });
+            next.on('click', function () {
+                changeNum(idx + 1);
+                return false;
+            });
+
+        }
+    };
+
+    $.fn.extend({
+        dutab: function(options) {
+            var defaults = {
+                dft: 0,
+                className: "cur",
+                tabsDom: ".tabs",
+                panelDom: ".tabs-pane"
+            };
+            var options = $.extend(defaults, options);
+            var tag = $(options.tabsDom + " > li", this);
+            var panel = $(options.panelDom + " > div", this);
+            tag.eq(options.dft).addClass(options.className);
+            panel.eq(options.dft).show().siblings().hide();
+
+            tag.on("click", function(){
+                $(this).addClass(options.className).siblings().removeClass(options.className);
+                panel.eq($(this).index()).show().siblings().hide();
+            });
+
+        }
+    });
+
+})(jQuery);

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+	<style>
+		body{height: 100px; position: relative;}
+		#box{width: 300px; height: 200px; background: #4bf; position: absolute;}
+		.content{width: 200px; margin: 0 auto; border: 1px solid #ccc; height: 200px;position: absolute;}
+	}
+	</style>
+	<div id="box">
+		<div class="content">dddd</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			/* animate 串行
+			 * 同一个对象顺序执行动画
+			 * 不同的对象同时执行动画
+			 */		
+			$('#box').on('click',function(){
+				$(this).animate({
+					left:'+=100px'
+				},2000);
+				$('.content').animate({
+					left:'+=100px'
+				},2000);
+			});
+		});
+	</script>
+	<!--    -->
+	<style>
+		
+	</style>
+	<div id="use1">
+		<div class="use1content"></div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('#use1').on('click',function(){
+				$('use1').animate({
+					left:'+=100px'
+				},{
+					duration:2000,
+					complete:function(){
+						$('.use1content').animate({
+							left:'+=100px'
+						},2000);
+					}
+				});
+			});	
+		});
+	</script>
+</body>
+</html>

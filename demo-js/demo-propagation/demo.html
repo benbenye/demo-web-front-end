@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件冒泡机制/冒泡和捕获</title>
+	<script src="../../demo-public/js/jquery.js"></script>
+</head>
+<body>
+	<div class="one">
+		<div class="two">
+			<div class="three">
+				<div class="four">
+					<div class="five"><a href="http://www.baidu.com" class="a">快来点我啊！</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<pre>
+		e.stopPropagation();//阻止冒泡
+		e.preventDefault();//阻止默认事件
+		return false;//阻止冒泡和默认事件
+	</pre>
+	<script>
+		$('.one').click(function() {
+			alert($(this).attr('class'));
+		});
+		$('.two').click(function() {
+			alert($(this).attr('class'));
+		});
+		$('.three').click(function() {
+			alert($(this).attr('class'));
+		});
+		$('.four').click(function() {
+			alert($(this).attr('class'));
+		});
+		$('.five').click(function(e) {
+			alert($(this).attr('class'));
+			//e.stopPropagation();//阻止冒泡
+			//  e.preventDefault();//阻止默认事件
+			return false;//阻止冒泡和默认事件
+		});
+		$('a').click(function() {
+			alert($(this).attr('class'));
+		});
+	</script>
+
+	<pre>
+		事件发生时，分为三个阶段
+		捕获阶段，从根节点开始顺序而下，检测每个节点是否注册了事件处理程序。如果注册了，并且useCapture为true，则调用该事件处理程序（ie无此阶段）
+		目标阶段，触发在目标对象本身注册的事件处理程序，也称正常时间派发阶段
+		冒泡阶段，从目标节点到根节点，检测每个节点是否注册了事件处理程序，如果注册了事件处理程序，并且useCapture为false，则调用该事件处理程序。
+	</pre>
+</body>
+</html>

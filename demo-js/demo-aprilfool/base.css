@@ -1,0 +1,95 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+body{background: #000; font-family: "Microsoft Yahei"; position: relative;}
+.body{width: 960px; margin: 0 auto;}
+
+.header{height: 30px; background: #222; width: 100%;}
+.header .header-main{width: 960px; margin: 0 auto;}
+.header .header-main .header-left li{display: inline-block; *display: inline;*zoom: 1; width: 55px; height: 30px; line-height: 30px;}
+.header .header-main .header-left li a{color: #fff; text-decoration: none; font-size: 12px;}
+
+.main-top{width: 960px; height: 820px; background: url(../../demo-public/images/aprilfool/oscar-bg.jpg) no-repeat;}
+.oscar-intro{padding-top: 260px; padding-left: 265px; padding-right: 20px;}
+.oscar-intro p{color: #fff; font-size: 16px; text-indent: 2em; line-height: 1.5em; text-align: justify;}
+
+.oscar-form{padding-left: 460px; margin-top: 60px;}
+.oscar-form .oscar-form-title,.oscar-form input{display: block;}
+.oscar-form .oscar-form-title{font-size: 20px; color: #baaa6e; margin-bottom: 20px;}
+.oscar-form input{width: 300px; height: 40px; background: #000; border: 1px solid #837c64; vertical-align: middle; color: #ddd; margin-bottom: 15px;}
+.oscar-form .oscar-form-submit{height: 50px; border: none; background: url(../../demo-public/images/aprilfool/oscar-submit-btn.png) no-repeat; text-indent: -9999px;}
+
+.main-bottom{background: #222; margin-bottom: 30px;}
+.main-bottom .main-title{color: #baaa6e; text-align: center; font-size: 20px; margin-bottom: 10px;}
+.main-bottom ul li{float: left;  width: 200px; padding-left: 10px; padding-right: 10px; padding-bottom: 10px; margin: 10px; background: #525252;}
+.main-bottom ul li .film-img{width: 200px; height: 130px; vertical-align: top; margin-bottom: 10px; margin-top: 10px;}
+.main-bottom ul li .film-name{text-decoration: none; color: #fff; font-size: 14px;}
+.main-bottom ul li .film-name:hover{color: #baaa6e;}
+
+
+.footer{color: #fff; text-align: center; font-size: 12px; margin-bottom: 20px;}
+
+
+/* 固定大小的写法 */
+.oscar-aprilfool{display: none; position: fixed; top: 0; bottom: 0; right: 0; left: 0; background: rgba(0,0,0,0.5);}
+.oscar-dialog{ width: 700px; height: 460px; background: url(../../demo-public/images/aprilfool/dialog.jpg) no-repeat; position: absolute; top: 50%; left: 50%; margin-left: -350px; margin-top: -230px;}
+.oscar-sprilfool .ref{display: inline-block; *display: inline; *zoom: 1;}
+
+/* 不定大小的写法 */
+.oscar-aprilfool1{display: none; text-align: center; background: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0;}
+.oscar-dialog1,.ref1{display: inline-block; *display: inline; *zoom: 1; vertical-align: middle;}
+.oscar-dialog1{ width: 700px; height: 170px; padding-top: 290px; background: url(../../demo-public/images/aprilfool/dialog.jpg) no-repeat; position: relative;}
+.ref1{ height: 100%;}
+.oscar-dialog1 p{text-align: left; color: #fff; text-indent: 2em; line-height: 1.5em; width: 650px; margin-right: auto; margin-left: auto;}
+.oscar-dialog1 p a{color: #baaa6e; text-decoration: none; font-size: 18px;}
+.oscar-dialog1 .oscar-encarge1{color: #baaa6e; font-size: 24px; text-align: center; line-height: 80px;}
+
+.dialog-close1{width: 24px; height: 24px; background: url(../../demo-public/images/aprilfool/close.jpg) no-repeat; position: absolute;right: 0; top: 0px; cursor: pointer;}
+
+.clearfix{zoom: 1; _height:1px;}
+.clearfix:after{content: ''; clear: both; display: block;}
