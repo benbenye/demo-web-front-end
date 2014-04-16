@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>demo</title>
+	<script src="../../demo-public/js/zepto.js"></script>
+	<script src="../../demo-public/js/j2query.js"></script>
+	<script src="../../demo-public/js/parallax.js"></script>
+	<style>
+		body{overflow: hidden; margin: 0; padding: 0; position: relative;}
+		#content{position: absolute; left: 0;}
+		.page{width: 100%; display: block;}
+		.page1{background: red;}
+		.page2{background: yellow;}
+		.page3{background: gray;}
+		.page4{background: blue;}
+		.page5{background: green;}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<sction class="page page1"></sction>
+		<sction class="page page2"></sction>
+		<sction class="page page3"></sction>
+		<sction class="page page4"></sction>
+		<sction class="page page5"></sction>
+	</div>
+	<script>
+		var Zepto = (function(){
+			var win_width = $(window).width(),
+				win_height = $(window).height();
+				console.log(win_height);
+			$('.page').height(win_height);
+			$('.page1').swipe(function(){
+				$('#content').css({top:'-'+win_height+'px'});
+			});
+		});
+	</script>
+</body>
+</html>

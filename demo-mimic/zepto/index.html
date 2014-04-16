@@ -646,15 +646,18 @@ function orientationChange(){
 
 // 以下是拖动效果
 var startX = 0,
-    startY = 0;
+    startY = 0,
     margin = 0;
 var pages = null;
 var curPage = 0;
 var pageWidth = 0,
     pageHeight = 0;
-var lineHeight = 0, secHeight = 0;
+var lineHeight = 0,
+	secHeight = 0;
 var targetElement = null;
-var scrollPrevent = false, movePrevent = false, touchDown = false;
+var scrollPrevent = false,
+	movePrevent = false,
+	touchDown = false;
 
 $(document).ready(function(){
 	initPage();
@@ -751,6 +754,9 @@ function nextPage(){
 }
 
 function animatePage( newPage ){
+	//newPage 新页面
+	//curPage 当前页面
+	//-pageHeight 页面长度？
     if(newPage<0){
         newPage = 0;
     }
