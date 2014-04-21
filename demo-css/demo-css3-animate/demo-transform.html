@@ -57,14 +57,20 @@
 			    -ms-transform:translate(30px,20px);
 				 -o-transform:translate(30px,20px);			
 		}
+		.animate{			
+			-webkit-transition-property:all;
+			-webkit-transition-duration:2s;
+			-webkit-transition-delay:2s;
+			-webkit-transition-timing-function:ease;
+		}
 	</style>
 
 	<div class="transform-box">
-		<div class="rotate">rotate旋转</div>
-		<div class="skew">skew扭曲</div>
-		<div class="scale">scale缩放</div>
-		<div class="martix">matrix矩阵</div>
-		<div class="translate">translate平移</div>
+		<div class="rotate animate">rotate旋转</div>
+		<div class="skew animate">skew扭曲</div>
+		<div class="scale animate">scale缩放</div>
+		<div class="martix animate">matrix矩阵</div>
+		<div class="translate animate">translate平移</div>
 	</div>
 
 	<pre>

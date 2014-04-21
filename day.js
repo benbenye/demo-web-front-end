@@ -140,3 +140,34 @@ pc版 轮播 焦点
  就是利用zepto的touch事件
  然后就是css3的动画属性
  结合到一起的，还以为多难
+
+ ///////////
+ Math 不是对象的类，没有构造函数，Math 的属性和方法都是简单的函数，而不是针对某个对象进行操作的方法。
+ 系统字体
+ 提交表单 样式
+未读信息颜色加深
+跳转页面的样式
+手机版
+
+正式写一下上下左右居中的demo
+
+hango.js
+
+////////////////////
+视频浏览数
+
+点击报名样式
+
+自定义字体
+
+今天的收获一定要写一篇文章
+http://www.kankanews.com/ICkengine/categories/web/page/2
+https://developers.google.com/chrome-developer-tools/docs/mobile-emulation?hl=zh-CN
+
+按钮：hover
+
+问题：怎么让页面变成一屏一屏的
+
+////////////////////////////////
+毕设文章编辑修改
+手机动画demo

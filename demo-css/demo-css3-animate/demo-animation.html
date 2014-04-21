@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>css3 animate-animation</title>
-	<script src="../demo-public/js/jquery.js"></script>
+	<script src="../../demo-public/js/jquery.js"></script>
 </head>
 <body>
 	<style>
@@ -126,7 +126,7 @@
 			-webkit-animation-duration:1s;
 			-webkit-animation-iteration-count:infinite;}
 	</style>
-	<img id="img-rotate" src="../demo-public/images/qq.png" alt=""><!-- 左右晃动的企鹅 -->
+	<img id="img-rotate" src="../../demo-public/images/qq.png" alt=""><!-- 左右晃动的企鹅 -->
 	<pre>
 		快把鼠标移到企鹅上看看
 	</pre>
@@ -139,5 +139,29 @@
 		});
 	});
 	</script>
+
+	<style>
+		.up-box{ position: relative; width: 50px; height: 50px; background: red;}
+		.up,.up b{position: absolute;top: 10px;left: 15px;border-width: 0 10px 10px;border-color: transparent;border-style: solid;width: 0;height: 0;border-bottom-color: #C3C3C3;}
+		.up b{left: -10px;top: 1px;border-bottom-color: red;border-width: 4px 10px 5px;}
+		#animation{
+			-webkit-animation:fadeOutUp 1.5s .2s ease both infinite;
+			-moz-animation:fadeOutUp 1.5s .2s ease both infinite;}
+			@-webkit-keyframes fadeOutUp{
+			0%{opacity:1;
+			-webkit-transform:translateY(0)}
+			100%{opacity:0;
+			-webkit-transform:translateY(-20px);}
+		}
+		@-moz-keyframes fadeOutUp{
+		0%{opacity:1;
+		-moz-transform:translateY(0)}
+		100%{opacity:0;
+		-moz-transform:translateY(-20px);}
+		}
+	</style>
+	<div class="up-box">
+		<div class="up" id="animation"><b></b></div>
+	</div>
 </body>
 </html>
