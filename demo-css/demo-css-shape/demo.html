@@ -44,7 +44,7 @@
 		}
 		/*兼容ie7的气泡*/
 		.bubble-all{
-			width: 50px; height: 50px; border-radius: 5px;
+			width: 28px; height: 28px; border-radius: 5px;
 			background: #f66; position: relative;
 		}
 		.bubble-all .triangle-right{
@@ -54,6 +54,13 @@
 			border-bottom: 3px solid transparent;
 			border-left: 22px solid #f66;
 		}
+		.bubble-all .triangle-bottom{
+			position: absolute; right: 22px; bottom: -14px;
+			width: 0; height: 0; margin-right: 0;
+			border-top: 12px solid #f66;
+			border-bottom: 3px solid transparent;
+			border-left: 22px solid transparent;
+		}
 	</style>
 	<div class="shape-box">
 		<div class="triangle"></div>
@@ -61,6 +68,9 @@
 		<div class="bubble-right"><span>中文中文中文</span><span class="ref"></span></div>
 		<div class="bubble-all">
 			<div class="triangle-right"></div>
+		</div>
+		<div class="bubble-all">
+			<div class="triangle-bottom"></div>
 		</div>
 	</div>
 
