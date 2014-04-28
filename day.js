@@ -147,4 +147,43 @@ pc版 轮播 焦点
  提交表单 样式
 未读信息颜色加深
 跳转页面的样式
-正经的写一次三角样式
+手机版
+
+正式写一下上下左右居中的demo
+
+hango.js
+
+////////////////////
+视频浏览数
+
+点击报名样式
+
+自定义字体
+
+今天的收获一定要写一篇文章
+http://www.kankanews.com/ICkengine/categories/web/page/2
+https://developers.google.com/chrome-developer-tools/docs/mobile-emulation?hl=zh-CN
+
+按钮：hover
+
+问题：怎么让页面变成一屏一屏的
+
+////////////////////////////////
+毕设文章编辑修改
+手机动画demo
+
+
+新片场 作品
+
+扶持计划 1.2
+活动分类
+
+/////////////////////
+毕设实现文章追加内容
+
+mongodb 在linux & windows下的安装和启动
+
+hover样式
+
+git 本地分支
+
