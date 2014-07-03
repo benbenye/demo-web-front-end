@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.img-css-1{
+			-webkit-transform: rotate(90deg);
+				-moz-transform:rotate(90deg);
+				  -o-transform:rotate(90deg);
+					 transform:rotate(90deg);
+		}
+		.img-css-2{
+			-webkit-transform: rotate(180deg);
+				-moz-transform:rotate(180deg);
+				  -o-transform:rotate(180deg);
+					 transform:rotate(180deg);
+		}
+		.img-css-3{
+			-webkit-transform: rotate(270deg);
+				-moz-transform:rotate(270deg);
+				  -o-transform:rotate(270deg);
+					 transform:rotate(270deg);
+		}
+		.img-css-0{
+			-webkit-transform: rotate(0deg);
+				-moz-transform:rotate(0deg);
+				  -o-transform:rotate(0deg);
+					 transform:rotate(0deg);
+		}
+		.img{
+			-webkit-transition-property:all;
+			-webkit-transition-duration:0.5;
+			-webkit-transition-delay:0;
+			-webkit-transition-timing-function:ease;
+		}
+	</style>
+	<script src="../../demo-public/js/jquery.js"></script>
+</head>
+<body>
+	<!-- 实现图片旋转
+		0 90 180 270 0
+		0 1 2 3 0 1 2 3
+		0 270 180 90 0
+		0 3 2 1 0 3 2 1
+
+		两个方法：
+		1：普通的css3
+		2：html5 canvas
+	 -->
+	<img class="img img-css-0" src="../../demo-public/images/qq.png" alt="">
+	<div class="rotate-btn-css1">点击顺时针旋转90</div>
+	<div class="rotate-btn-css2">点击逆时针旋转90</div>
+	<script>
+	var css= 'img-css-',deg=0,
+		max=3,min = 0;
+		$('.rotate-btn-css1').click(function(){
+			getDeg();//获取当前角度 
+			if(deg<3){
+				$('.img').removeClass(css+deg).addClass(css+(deg+1));
+			}else{
+				$('.img').removeClass(css+deg).addClass(css+min);
+			}
+		});
+		$('.rotate-btn-css2').click(function(){
+			getDeg();
+			if(deg==0){
+				$('.img').removeClass(css+deg).addClass(css+max);
+			}else{
+				$('.img').removeClass(css+deg).addClass(css+(deg-1));
+			}
+		});
+		function getDeg(){
+			var classStr = $('.img').attr('class').split(' ');
+			var temp = classStr[classStr.length-1].split('-');
+			deg = temp[temp.length-1];
+			deg = parseInt(deg);
+		}
+	</script>
+</body>
+</html>

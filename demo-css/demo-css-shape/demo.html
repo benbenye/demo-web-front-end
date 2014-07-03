@@ -9,11 +9,21 @@
 		.shape-box div{display: inline-block; *display: inline; *zoom: 1; margin-right: 30px; vertical-align: middle; text-align: center;}
 		/*三角形*/
 		.triangle{
+			position: relative;
 			width: 0; height: 0;
-			border-top: 50px solid transparent;
-			border-right: 100px solid #f66;
-			border-bottom: 50px solid transparent;
+			border-left: 50px solid transparent;
+			border-bottom: 100px solid #f66;
+			border-right: 50px solid transparent;
 		}
+		.triangle .tri-inner{
+			position: absolute;
+			width: 0;
+			height: 0;
+			border-left: 50px solid transparent;
+			border-bottom: 100px solid #f66;
+			border-right: 50px solid transparent;
+		}
+
 		/*气泡*/
 		.bubble-left {
 		   width: 120px; height: 80px; background: #f66; position: relative;
@@ -63,7 +73,7 @@
 		}
 	</style>
 	<div class="shape-box">
-		<div class="triangle"></div>
+		<div class="triangle"><div class="tri-inner"></div></div>
 		<div class="bubble-left"></div>
 		<div class="bubble-right"><span>中文中文中文</span><span class="ref"></span></div>
 		<div class="bubble-all">
