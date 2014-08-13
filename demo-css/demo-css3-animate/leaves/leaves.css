@@ -86,7 +86,20 @@ body{background: #4E4226;}
 	height: 100px;
 }
 .containerleaves div img{
-	-webkit-transform-origin:10% 50%;
+     position: absolute;
+     width: 100px;
+     height: 100px;
+
+    /* We use the following properties to adjust the clockwiseSpin or counterclockwiseSpinAndFlip
+       animations on each leaf.
+       The createALeaf function in the Leaves.js file determines whether a leaf has the 
+       clockwiseSpin or counterclockwiseSpinAndFlip animation.
+    */
+     -webkit-animation-iteration-count: infinite;
+     -webkit-animation-direction: alternate;
+     -webkit-animation-timing-function: ease-in-out;
+	-webkit-transform-origin:50% -100%;
+	/*-webkit-animation:rotat 4s!important;*/
 }
 
 @-webkit-keyframes fade{
@@ -100,18 +113,19 @@ body{background: #4E4226;}
 
 @-webkit-keyframes dropDown{
 	0%{
-		-webkit-transform:translateY(-50px);
+		-webkit-transform:translate(0px,-50px);
 	}
 	100%{
-		-webkit-transform:translateY(600px);
+		-webkit-transform:translate(0px,650px);
 	}
 }
 
 @-webkit-keyframes rotat{
 	0%{
-		-webkit-transform:rotate(-50deg);
+		-webkit-transform:scale(-1, 1) rotate(-50deg);
 	}
 	100%{
-		-webkit-transform:rotate(50deg);
+		-webkit-transform:scale(-1, 1) rotate(50deg);
+		-webkit-transform:rotate(30deg);
 	}
 }
