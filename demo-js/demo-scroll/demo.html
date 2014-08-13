@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jq</title>
+<style type="text/css">
+*{margin:0; padding:0;}
+li{list-style:none;}
+ .scrollNews{
+ width:600px;
+ height:80px;
+ line-height:60px;
+ overflow:hidden;
+ background:#eee;
+}
+.scrollNews ul{width:1800px; margin-top:10px; }
+ .scrollNews li{
+ height:60px;  margin-right:5px; 
+}
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+        var $this = $(".scrollNews");
+  var scrollTimer;
+ 
+ setInterval(function(){
+       scrollNews( $this );
+     }, 1200 );
+});
+function scrollNews(obj){
+   var $self = obj.find("ul:first"); 
+   var lineHeight = $self.find("li:first").height(); //获取宽度，向上滚动则需要获取高度.height()
+   $self.animate({ "marginTop" : -lineHeight +"px" }, 600 , function(){ //向左滚动，向上滚动则需要改为marginTop,其他方向类似，下同
+         $self.css({marginTop:0}).find("li:first").appendTo($self); //appendTo能直接移动元素
+   })
+}
+</script>
+
+</head>
+<body>
+   <div class="scrollNews" >
+    <ul>
+     <li><img src="images/1.gif" width="317" height="60" /></li>
+     <li><img src="images/2.gif" width="317" height="60" /></li>
+     <li><img src="images/3.gif" width="317" height="60" /></li>
+     <li><img src="images/4.gif" width="317" height="60" /></li>
+     <li><img src="images/5.gif" width="317" height="60" /></li>
+    </ul>
+   </div>
+</body>
+</html>
