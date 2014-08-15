@@ -16,10 +16,6 @@ $(function () {
 				this.randomTimeAry.push(Math.random()*2+3);
 				this.randomDelayTimeAry.push(Math.random()*5);
 			}
-			console.log(this.randomLeavesAry);
-			console.log(this.randomLeftAry);
-			console.log(this.randomTimeAry);
-			console.log(this.randomDelayTimeAry);
 		},
 		toDom : function(){
 			this.randomFn();

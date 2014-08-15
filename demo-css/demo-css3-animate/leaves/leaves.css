@@ -86,8 +86,11 @@ body{background: #4E4226;}
 	height: 100px;
 }
 .containerleaves div img{
-	-webkit-transform-origin:10% 50%;
+	display: block;
+	-webkit-transform-origin:10% -100%;
 }
+
+.ro{width: 100px; height: 100px; background: red; -webkit-transform-origin:10% -100%; -webkit-animation:rotat 3s;}
 
 @-webkit-keyframes fade{
 	0%{
