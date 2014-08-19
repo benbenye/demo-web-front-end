@@ -84,17 +84,23 @@ body{background: #4E4226;}
 	position: absolute;
 	width: 100px;
 	height: 100px;
+    -webkit-animation-timing-function: ease-in-out,ease-in-out;
 }
 .containerleaves div img{
 	display: block;
-	-webkit-transform-origin:10% -100%;
+	-webkit-animation-direction: alternate;
+	-webkit-transform-origin: 50% -100%;
 }
-
-.ro{width: 100px; height: 100px; background: red; -webkit-transform-origin:10% -100%; -webkit-animation:rotat 3s;}
 
 @-webkit-keyframes fade{
 	0%{
 		opacity: 1;
+	}
+	80%{
+		opacity: 1;
+	}
+	90%{
+		opacity: 0;
 	}
 	100%{
 		opacity: 0;
@@ -103,18 +109,18 @@ body{background: #4E4226;}
 
 @-webkit-keyframes dropDown{
 	0%{
-		-webkit-transform:translateY(-50px);
+		-webkit-transform:translateY(-150px);
 	}
 	100%{
-		-webkit-transform:translateY(600px);
+		-webkit-transform:translateY(700px);
 	}
 }
 
 @-webkit-keyframes rotat{
 	0%{
-		-webkit-transform:rotate(-50deg);
+		-webkit-transform: scale(-1, 1) rotate(-50deg);
 	}
 	100%{
-		-webkit-transform:rotate(50deg);
+		-webkit-transform: scale(-1, 1) rotate(-50deg);
 	}
 }
