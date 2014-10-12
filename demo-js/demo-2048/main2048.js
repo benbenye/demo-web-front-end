@@ -1,45 +1,99 @@
-var board = new Array(),
-	score = 0;
+var 
+	dimension = 4,//维度
+	board = new Array(dimension),//存储存在的棋子对象
+	score = 0,//记录分数
+	empty = dimension*dimension;//空位置计数器
+
+for(var i = 0; i < dimension; i++){
+	board[i] = new Array(dimension);
+}//创建二维数组存储对象,数组遍历横向龙摆尾
+
+function cellObj(x, y, color, number){//棋子对象
+	this.x = x;//X坐标
+	this.y = y;//Y坐标
+	this.color = color;//颜色值
+	this.number = number;//显示数字
+}
 
 $(document).ready(function(){
 	newgame();
 });
 
 function newgame(){
-	// 初始化棋盘格
-	init();
+	/* 初始化棋盘格
+	*@pram dimension:棋盘大小
+	*/
+	init(dimension);
+
 	// 随机生成两个格子的数字
+	ranNum();
+	ranNum();
+	console.log(empty);
+	console.log(board);
 }
 
-function init(){
-	for (var i = 0; i < 4; i++) {
-		for(var j = 0; j < 4; j++){
-			var gridCell = $('#grid-cell-' + i + '-' + j);
-			gridCell.css({ left : getPosTop( i, j), top : getPosLeft( i, j)});
+function init(dimension){
+	// 重置数组
+	for(var i = 0; i < dimension; ++i){
+		for(var j = 0; j < dimension; ++j){
+			board[i][j] = undefined;
 		}
 	}
+	empty = dimension * dimension;
 
-	for(var i = 0; i < 4; i++){
-		board[i] = new Array();
-		for( var j = 0; j< 4; j++){
-			board[i][j] = 0;
+	var $container = $('#grid-container').empty();
+	for (var i = 0; i < dimension; i++) {
+		for(var j = 0; j < dimension; j++){
+			var gridCell = $('<div class="grid-cell" id="#grid-cell-' + i + '-' + j+'"></div>');
+			gridCell.css({ left : getPosTop( i, j)+'px', top : getPosLeft( i, j)+'px'});
+			$container.append(gridCell);
 		}
 	}
-
-	updateBoardView();
 }
 
-function updateBoardView(){
-	$('.number-cell').remove();
-	for (var i = 0; i < 4; i++) {
-		for(var j = 0; j < 4; j++){
-			$('#grid-container').append('<div class="number-cell" id="number-cell-"'+i+'-'+j'></div>');
-			var theNumberCell = $('#number-cell-'+i+'-'+j);
-			if(board[i][j] === 0){
-				theNumberCell.css({width:0,height:0,top:getPosTop(i,j) + 50,left:getPosLeft(i,j) + 50});
-			}else{
-				theNumberCell.css({width:'100px',height:'100px',top:getPosTop(i,j),left:getPosLeft(i,j),backgroundColor:getNumberBgc(board[i][j])}).text(board[i][j]);
+function ranNum(){
+	var _ranNum = Math.random() > 0.5 ? {number : 2,color : 'c2'} : {number : 4, color : 'c4'};
+
+	//查找空位置有几个 
+	// for(var i = 0; i < dimension; ++i){
+	// 	for( var j = 0; j < dimension; ++j){
+	// 		board[i][j] ? --empty : empty;
+	// 	}
+	// }
+
+	if(empty){
+		// 生成随机出现的位置
+		var _ranDes = Math.floor( Math.random() * empty + 1 );
+	}
+
+	// ？另一个方法，随机生成一个位置，按照一个规则顺序查找是否有一个空位置
+
+	// 找到空位置坐标
+	var destination = {x:0,y:0};
+	for(var i = 0; i < dimension; ++i){//i为y轴
+		for( var j = 0; j < dimension; ++j){
+			if(!board[j][i]){//如果是空
+				--_ranDes;
+			}
+			if(_ranDes == 0){//找到空位置
+				destination.x = j;
+				destination.y = i;
+				break;
 			}
 		}
-	};
+
+		if(_ranDes == 0){//找到空位置
+			break;
+		}
+	}
+
+	// 实例化一个随机棋子
+	var cellObjNew = new cellObj(destination.x, destination.y, _ranNum.color, _ranNum.number);
+
+	// 更新数组
+	updateBorad(cellObjNew,1);
+
+	// 显示数字
+	showCell(cellObjNew);
+
 }
