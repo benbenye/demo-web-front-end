@@ -6,7 +6,7 @@ var
 
 for(var i = 0; i < dimension; i++){
 	board[i] = new Array(dimension);
-}//创建二维数组存储对象,数组遍历横向龙摆尾
+}//创建二维数组存储对象,数组遍历竖向龙摆尾
 
 function cellObj(x, y, color, number){//棋子对象
 	this.x = x;//X坐标
@@ -54,13 +54,6 @@ function init(dimension){
 function ranNum(){
 	var _ranNum = Math.random() > 0.5 ? {number : 2,color : 'c2'} : {number : 4, color : 'c4'};
 
-	//查找空位置有几个 
-	// for(var i = 0; i < dimension; ++i){
-	// 	for( var j = 0; j < dimension; ++j){
-	// 		board[i][j] ? --empty : empty;
-	// 	}
-	// }
-
 	if(empty){
 		// 生成随机出现的位置
 		var _ranDes = Math.floor( Math.random() * empty + 1 );
@@ -70,14 +63,14 @@ function ranNum(){
 
 	// 找到空位置坐标
 	var destination = {x:0,y:0};
-	for(var i = 0; i < dimension; ++i){//i为y轴
+	for(var i = 0; i < dimension; ++i){//i为x轴
 		for( var j = 0; j < dimension; ++j){
-			if(!board[j][i]){//如果是空
+			if(!board[i][j]){//如果是空
 				--_ranDes;
 			}
 			if(_ranDes == 0){//找到空位置
-				destination.x = j;
-				destination.y = i;
+				destination.x = i;
+				destination.y = j;
 				break;
 			}
 		}
