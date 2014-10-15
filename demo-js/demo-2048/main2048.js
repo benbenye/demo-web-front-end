@@ -26,10 +26,8 @@ function newgame(){
 	init(dimension);
 
 	// 随机生成两个格子的数字
-	ranNum();
-	ranNum();
-	console.log(empty);
-	console.log(board);
+	ranNum(true);
+	ranNum(true);
 }
 
 function init(dimension){
@@ -51,44 +49,46 @@ function init(dimension){
 	}
 }
 
-function ranNum(){
-	var _ranNum = Math.random() > 0.5 ? {number : 2,color : 'c2'} : {number : 4, color : 'c4'};
+function ranNum(flag){
+	flag = flag || false;
+	if(flag){
+		var _ranNum = Math.random() > 0.5 ? {number : 2,color : 'c2'} : {number : 4, color : 'c4'};
 
-	if(empty){
-		// 生成随机出现的位置
-		var _ranDes = Math.floor( Math.random() * empty + 1 );
-	}
+		if(empty){
+			// 生成随机出现的位置
+			var _ranDes = Math.floor( Math.random() * empty + 1 );
+		}
 
-	// ？另一个方法，随机生成一个位置，按照一个规则顺序查找是否有一个空位置
+		// ？另一个方法，随机生成一个位置，按照一个规则顺序查找是否有一个空位置
 
-	// 找到空位置坐标
-	var destination = {x:0,y:0};
-	for(var i = 0; i < dimension; ++i){//i为x轴
-		for( var j = 0; j < dimension; ++j){
-			if(!board[i][j]){//如果是空
-				--_ranDes;
+		// 找到空位置坐标
+		var destination = {x:0,y:0};
+		for(var i = 0; i < dimension; ++i){//i为x轴
+			for( var j = 0; j < dimension; ++j){
+				if(!board[i][j]){//如果是空
+					--_ranDes;
+				}
+				if(_ranDes == 0){//找到空位置
+					destination.x = i;
+					destination.y = j;
+					break;
+				}
 			}
+
 			if(_ranDes == 0){//找到空位置
-				destination.x = i;
-				destination.y = j;
 				break;
 			}
 		}
 
-		if(_ranDes == 0){//找到空位置
-			break;
-		}
+		// 实例化一个随机棋子
+		var cellObjNew = new cellObj(destination.x, destination.y, _ranNum.color, _ranNum.number);
+
+		// 更新数组
+		updateBorad(1, cellObjNew);
+
+		// 显示数字
+		showCell(cellObjNew);
 	}
-
-	// 实例化一个随机棋子
-	var cellObjNew = new cellObj(destination.x, destination.y, _ranNum.color, _ranNum.number);
-
-	// 更新数组
-	updateBorad(cellObjNew,1);
-
-	// 显示数字
-	showCell(cellObjNew);
-
 }
 // 键盘上下左右
 $(window).keyup(function(e){
@@ -97,17 +97,25 @@ $(window).keyup(function(e){
 	*right 39
 	*down 40*/
 	switch(e.keyCode)
-	{case 37:
-			moveleft();
+	{
+		case 37:
+			
+			ranNum(moveleft());
 			break;
 		case 38:
-			moveUp();
+			
+			ranNum(moveUp());
 			break;
 		case 39:
-			moveRight();
+			
+			ranNum(moveRight());
 			break;
 		case 40:
-			moveDown();
+			
+			ranNum(moveDown());
 			break;
-		default : alert('只能上下左右');break;}
+		default :
+			alert('只能上下左右');
+			break;
+	}
 });

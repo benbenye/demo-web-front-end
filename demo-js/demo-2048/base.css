@@ -14,7 +14,7 @@ header p{font: 25px arial; margin: 25px auto;}
 
 .c2{background: rgba(236, 228, 217, 1);}
 .c4{background: rgba(237, 222, 201, 1);}
-.c8{background: rgba(240, 176, 122, 1);}
-.c16{background: rgba(235, 141, 81, 1);}
-.c32{background: rgba(247, 122, 94, 1);}
-.c64{background: rgba(247, 122, 94, 1);}
+.c8{background: rgba(240, 176, 122, 1);color: #fff;}
+.c16{background: rgba(235, 141, 81, 1);color: #fff;}
+.c32{background: rgba(247, 122, 94, 1);color: #fff;}
+.c64{background: rgba(247, 122, 94, 1);color: #fff;}
