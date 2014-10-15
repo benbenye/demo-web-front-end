@@ -8,7 +8,7 @@ for(var i = 0; i < dimension; i++){
 	board[i] = new Array(dimension);
 }//创建二维数组存储对象,数组遍历竖向龙摆尾
 
-function cellObj(x, y, color, number){//棋子对象
+function CellObj(x, y, color, number){//棋子对象
 	this.x = x;//X坐标
 	this.y = y;//Y坐标
 	this.color = color;//颜色值
@@ -81,13 +81,13 @@ function ranNum(flag){
 		}
 
 		// 实例化一个随机棋子
-		var cellObjNew = new cellObj(destination.x, destination.y, _ranNum.color, _ranNum.number);
+		var CellObjNew = new CellObj(destination.x, destination.y, _ranNum.color, _ranNum.number);
 
 		// 更新数组
-		updateBorad(1, cellObjNew);
+		updateBorad(1, CellObjNew);
 
 		// 显示数字
-		showCell(cellObjNew);
+		showCell(CellObjNew);
 	}
 }
 // 键盘上下左右
