@@ -90,3 +90,24 @@ function ranNum(){
 	showCell(cellObjNew);
 
 }
+// 键盘上下左右
+$(window).keyup(function(e){
+	/*left 37
+	*up 38
+	*right 39
+	*down 40*/
+	switch(e.keyCode)
+	{case 37:
+			moveleft();
+			break;
+		case 38:
+			moveUp();
+			break;
+		case 39:
+			moveRight();
+			break;
+		case 40:
+			moveDown();
+			break;
+		default : alert('只能上下左右');break;}
+});
