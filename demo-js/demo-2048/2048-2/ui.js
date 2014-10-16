@@ -24,7 +24,7 @@ var ui = {
 	showCell : function(container,obj){
 		var _str = $('<div class="cell animate-new-cell '+obj.color+'" id="grid-cell-'+obj.x+'-'+obj.y+'">'+obj.number+'</div>');
 
-		_str.css({ left : this.getPosTop( obj.x, obj.y)+'px', top : this.getPosLeft( obj.x, obj.y)+'px'});
+		_str.css({ left : this.getPosLeft( obj.x, obj.y)+'px', top : this.getPosTop( obj.x, obj.y)+'px'});
 
 		$(container).append(_str);
 

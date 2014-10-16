@@ -36,40 +36,41 @@ function Board(dimension,score,container){
 	*生成带有随机数的棋子
 	*/
 	this.ranCell = function(){
-		var _ranCell = Math.random() > 0.5 ? {number : 2,color : 'c2', x : 0, y : 0} : {number : 4, color : 'c4', x : 0, y : 0},
-			_ranDes = 0;
-
 		if(empty){
+			var _ranCell = Math.random() > 0.5 ? {number : 2,color : 'c2', x : 0, y : 0} : {number : 4, color : 'c4', x : 0, y : 0},
+				_ranDes = 0;
 			// 生成随机出现的位置
 			_ranDes = Math.floor( Math.random() * empty + 1 );
-		}
 
-		// ？另一个方法，随机生成一个位置，按照一个规则顺序查找是否有一个空位置
+			// ？另一个方法，随机生成一个位置，按照一个规则顺序查找是否有一个空位置
 
-		// 找到空位置坐标
-		for(var i = 0; i < dimension; ++i){//i为x轴
-			for( var j = 0; j < dimension; ++j){
-				if(!this.cells[i][j]){//如果是空
-					--_ranDes;
+			// 找到空位置坐标
+			for(var i = 0; i < dimension; ++i){//i为x轴
+				for( var j = 0; j < dimension; ++j){
+					if(!this.cells[i][j]){//如果是空
+						--_ranDes;
+					}
+					if(_ranDes == 0){//找到空位置
+						_ranCell.x = i;
+						_ranCell.y = j;
+						break;
+					}
 				}
+
 				if(_ranDes == 0){//找到空位置
-					_ranCell.x = i;
-					_ranCell.y = j;
 					break;
 				}
 			}
 
-			if(_ranDes == 0){//找到空位置
-				break;
-			}
+			// 实例化一个随机棋子
+			var cellNew = new Cell(_ranCell.x, _ranCell.y, _ranCell.color, _ranCell.number);
+
+			this.updateEmpty(cellNew);
+
+			cellNew.show(this.container, cellNew);
+		}else{
+			alert('无空位置');
 		}
-
-		// 实例化一个随机棋子
-		var cellNew = new Cell(_ranCell.x, _ranCell.y, _ranCell.color, _ranCell.number);
-
-		this.updateEmpty(cellNew);
-
-		cellNew.show(this.container, cellNew);
 	};
 	/*
 	*键盘上方向的操作
@@ -111,9 +112,9 @@ function Board(dimension,score,container){
 					if(tempArray[m].number === tempArray[m+1].number){
 						tempArray[m].number = tempArray[m].number*2;
 						tempArray[m].color = 'c' + tempArray[m].number;
-						$('#cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
+						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
 						tempArray.splice(m+1,1);
-						flag = true; ++merge;
+						++merge;
 						// updateBorad(merge);
 					}else{
 						continue;
@@ -126,16 +127,21 @@ function Board(dimension,score,container){
 			//展示
 			for(var k = 0; k < this.dimension; ++k){
 				if(this.cells[k][i]){
-					$('#cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
-					if(this.cells[k][i].x == k && this.cells[k][i].y == i){flag = true;}
+					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
+					console.log('k:'+k +';i:'+i+';x:'+this.cells[k][i].x+';y:'+this.cells[k][i].y);
+
+					if(!merge && (this.cells[k][i].x != k || this.cells[k][i].y != i)){move = true;}
 					this.cells[k][i].x=k;
 					this.cells[k][i].y=i;
-					// showCell(this.cells[k][i]);
+					ui.showCell(this.container, this.cells[k][i]);
 				}
 			}
 			tempArray=[];
 		}
-		// return flag;
+		this.updateEmpty(merge);
+		if(move || merge){
+			this.ranCell();
+		}
 	};
 	/*
 	*计算游戏分数
