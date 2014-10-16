@@ -77,6 +77,52 @@ function Board(dimension,score,container){
 	*/
 	this.moveUp = function(){
 		console.log('d1');
+		// 从上向下竖向遍历从左到右
+		var tempArray = [],//临时数组用于合并棋子
+			move = false,//是否移动棋子
+			merge = 0;//合并棋子对数
+
+		for(var i = 0; i < this.dimension; ++i){
+			for(var j = 0; j < this.dimension; ++j){
+				if(this.cells[i][j]){
+					tempArray.push(this.cells[i][j]);
+					this.cells[i][j]= undefined;
+				}
+			}
+			if(tempArray.length>=1){
+				for(var m = 0; m < tempArray.length -1; ++m){
+					if(tempArray[m].number === tempArray[m+1].number){
+						tempArray[m].number = tempArray[m].number*2;
+						tempArray[m].color = 'c' + tempArray[m].number;
+						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
+						tempArray.splice(m+1,1);
+						++merge;
+					}
+				}
+				for(var n = 0; n < this.dimension; ++n){
+					this.cells[i][n] = tempArray[n];
+				}
+			}
+			//展示
+			for(var k = 0; k < this.dimension; ++k){
+				if(this.cells[i][k]){
+					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
+					if(!merge && (this.cells[i][k].x != i || this.cells[i][k].y != k)) {
+						move = true;
+					console.log('merge:'+merge+'move:'+move);
+					}
+					this.cells[i][k].x=i;
+					this.cells[i][k].y=k;
+					ui.showCell(this.container, this.cells[i][k]);
+				}
+			}
+			tempArray=[];
+		}
+		console.log(this.cells)	;
+		this.updateEmpty(merge);
+		if(move || merge){
+			this.ranCell();
+		}
 	};
 	/*
 	*键盘右方向的操作
@@ -115,7 +161,6 @@ function Board(dimension,score,container){
 						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
 						tempArray.splice(m+1,1);
 						++merge;
-						// updateBorad(merge);
 					}else{
 						continue;
 					}
@@ -128,8 +173,6 @@ function Board(dimension,score,container){
 			for(var k = 0; k < this.dimension; ++k){
 				if(this.cells[k][i]){
 					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
-					console.log('k:'+k +';i:'+i+';x:'+this.cells[k][i].x+';y:'+this.cells[k][i].y);
-
 					if(!merge && (this.cells[k][i].x != k || this.cells[k][i].y != i)){move = true;}
 					this.cells[k][i].x=k;
 					this.cells[k][i].y=i;
