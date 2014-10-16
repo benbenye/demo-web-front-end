@@ -94,6 +94,48 @@ function Board(dimension,score,container){
 	*/
 	this.moveLeft = function(){
 		console.log('d4');
+		// 从左向右横向遍历
+		var tempArray = [],//临时数组用于合并棋子
+			move = false,//是否移动棋子
+			merge = 0;//合并棋子对数
+
+		for(var i = 0; i < this.dimension; ++i){
+			for(var j = 0; j < this.dimension; ++j){
+				if(this.cells[j][i]){
+					tempArray.push(this.cells[j][i]);
+					this.cells[j][i]= undefined;
+				}
+			}
+			if(tempArray.length>=1){
+				for(var m = 0; m < tempArray.length -1; ++m){
+					if(tempArray[m].number === tempArray[m+1].number){
+						tempArray[m].number = tempArray[m].number*2;
+						tempArray[m].color = 'c' + tempArray[m].number;
+						$('#cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
+						tempArray.splice(m+1,1);
+						flag = true; ++merge;
+						// updateBorad(merge);
+					}else{
+						continue;
+					}
+				}
+				for(var n = 0; n < this.dimension; ++n){
+					this.cells[n][i] = tempArray[n];
+				}
+			}
+			//展示
+			for(var k = 0; k < this.dimension; ++k){
+				if(this.cells[k][i]){
+					$('#cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
+					if(this.cells[k][i].x == k && this.cells[k][i].y == i){flag = true;}
+					this.cells[k][i].x=k;
+					this.cells[k][i].y=i;
+					// showCell(this.cells[k][i]);
+				}
+			}
+			tempArray=[];
+		}
+		// return flag;
 	};
 	/*
 	*计算游戏分数
