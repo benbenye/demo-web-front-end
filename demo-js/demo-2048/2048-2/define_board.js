@@ -107,9 +107,9 @@ function Board(dimension,score,container){
 			for(var k = 0; k < this.dimension; ++k){
 				if(this.cells[i][k]){
 					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
-					if(!merge && (this.cells[i][k].x != i || this.cells[i][k].y != k)) {
+					if(!merge && this.cells[i][k].y != k) {
 						move = true;
-					console.log('merge:'+merge+'move:'+move);
+					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[i][k].x+';y:'+this.cells[i][k].y );
 					}
 					this.cells[i][k].x=i;
 					this.cells[i][k].y=k;
@@ -121,6 +121,7 @@ function Board(dimension,score,container){
 		console.log(this.cells)	;
 		this.updateEmpty(merge);
 		if(move || merge){
+			console.log(move+''+merge);
 			this.ranCell();
 		}
 	};
@@ -173,7 +174,10 @@ function Board(dimension,score,container){
 			for(var k = 0; k < this.dimension; ++k){
 				if(this.cells[k][i]){
 					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
-					if(!merge && (this.cells[k][i].x != k || this.cells[k][i].y != i)){move = true;}
+					if(!merge && this.cells[k][i].x != k) {
+						move = true;
+					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[k][i].x+';y:'+this.cells[k][i].y );
+					}
 					this.cells[k][i].x=k;
 					this.cells[k][i].y=i;
 					ui.showCell(this.container, this.cells[k][i]);
