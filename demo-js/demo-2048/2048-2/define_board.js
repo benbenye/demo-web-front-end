@@ -70,8 +70,6 @@ function Board(dimension,score,container){
 			}
 
 			this.updateEmpty(cellNew);
-			console.log(cellNew);
-			console.log(_ranCell);
 			cellNew.show(this.container, cellNew);
 		}else{
 			alert('无空位置');
@@ -81,7 +79,6 @@ function Board(dimension,score,container){
 	*键盘上方向的操作
 	*/
 	this.moveUp = function(){
-		console.log('d1');
 		// 从上向下竖向遍历从左到右
 		var tempArray = [],//临时数组用于合并棋子
 			move = false,//是否移动棋子
@@ -114,7 +111,6 @@ function Board(dimension,score,container){
 					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
 					if(!merge && this.cells[i][k].y != k) {
 						move = true;
-					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[i][k].x+';y:'+this.cells[i][k].y );
 					}
 					this.cells[i][k].x=i;
 					this.cells[i][k].y=k;
@@ -123,10 +119,8 @@ function Board(dimension,score,container){
 			}
 			tempArray=[];
 		}
-		console.log(this.cells)	;
 		this.updateEmpty(merge);
 		if(move || merge){
-			console.log(move+''+merge);
 			this.ranCell();
 		}
 	};
@@ -134,7 +128,6 @@ function Board(dimension,score,container){
 	*键盘右方向的操作
 	*/
 	this.moveRight = function(){
-		console.log('d2');
 		// 从右向左横向遍历
 		var tempArray = [],//临时数组用于合并棋子
 			move = false,//是否移动棋子
@@ -147,8 +140,6 @@ function Board(dimension,score,container){
 					this.cells[j][i]= undefined;
 				}
 			}
-			console.log(tempArray);
-			console.log(this.cells);
 			if(tempArray.length>=1){
 				for(var m = 0; m < tempArray.length -1; ++m){
 					if(tempArray[m].number === tempArray[m+1].number){
@@ -165,14 +156,12 @@ function Board(dimension,score,container){
 					this.cells[n][i] = tempArray[this.dimension - 1 - n];
 				}
 			}
-			console.log(this.cells);
 			//展示
 			for(var k = this.dimension - 1; k >= 0; --k){
 				if(this.cells[k][i]){
 					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
 					if(!merge && this.cells[k][i].x != k) {
 						move = true;
-					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[k][i].x+';y:'+this.cells[k][i].y );
 					}
 					this.cells[k][i].x=k;
 					this.cells[k][i].y=i;
@@ -190,7 +179,6 @@ function Board(dimension,score,container){
 	*键盘下方向的操作
 	*/
 	this.moveDown = function(){
-		console.log('d3');
 		// 从上向下竖向遍历从左到右
 		var tempArray = [],//临时数组用于合并棋子
 			move = false,//是否移动棋子
@@ -223,7 +211,6 @@ function Board(dimension,score,container){
 					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
 					if(!merge && this.cells[i][k].y != k) {
 						move = true;
-					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[i][k].x+';y:'+this.cells[i][k].y );
 					}
 					this.cells[i][k].x=i;
 					this.cells[i][k].y=k;
@@ -232,10 +219,8 @@ function Board(dimension,score,container){
 			}
 			tempArray=[];
 		}
-		console.log(this.cells)	;
 		this.updateEmpty(merge);
 		if(move || merge){
-			console.log(move+''+merge);
 			this.ranCell();
 		}
 	};
@@ -243,7 +228,6 @@ function Board(dimension,score,container){
 	*键盘左方向的操作
 	*/
 	this.moveLeft = function(){
-		console.log('d4');
 		// 从左向右横向遍历
 		var tempArray = [],//临时数组用于合并棋子
 			move = false,//是否移动棋子
@@ -278,7 +262,6 @@ function Board(dimension,score,container){
 					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
 					if(!merge && this.cells[k][i].x != k) {
 						move = true;
-					console.log('merge:'+merge+'move:'+move+';i:'+i+';k:'+k+';x:'+this.cells[k][i].x+';y:'+this.cells[k][i].y );
 					}
 					this.cells[k][i].x=k;
 					this.cells[k][i].y=i;
