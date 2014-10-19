@@ -70,7 +70,7 @@ function Board(dimension,score,container){
 			}
 
 			this.updateEmpty(cellNew);
-			cellNew.show(this.container, cellNew);
+			cellNew.show(this.container, cellNew, 1);
 		}else{
 			alert('无空位置');
 		}
@@ -237,7 +237,6 @@ function Board(dimension,score,container){
 			for(var j = 0; j < this.dimension; ++j){
 				if(this.cells[j][i]){
 					tempArray.push(this.cells[j][i]);
-					this.cells[j][i]= undefined;
 				}
 			}
 			if(tempArray.length>=1){
@@ -245,8 +244,11 @@ function Board(dimension,score,container){
 					if(tempArray[m].number === tempArray[m+1].number){
 						tempArray[m].number = tempArray[m].number*2;
 						tempArray[m].color = 'c' + tempArray[m].number;
-						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
-						tempArray.splice(m+1,1);
+						tempArray[m+1].x1 = tempArray[m].x;
+						tempArray[m+1].y1 = tempArray[m].y;
+						++m;
+						// $('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
+						// tempArray.splice(m+1,1);
 						++merge;
 					}else{
 						continue;

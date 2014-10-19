@@ -22,12 +22,16 @@ var ui = {
 	*showCell() 显示棋子
 	*/
 	showCell : function(container,obj){
-		var _str = $('<div class="cell animate-new-cell '+obj.color+'" id="grid-cell-'+obj.x+'-'+obj.y+'">'+obj.number+'</div>');
+		var _str = $('<div class="cell '+obj.color+'" id="grid-cell-'+obj.x+'-'+obj.y+'">'+obj.number+'</div>');
 
 		_str.css({ left : this.getPosLeft( obj.x, obj.y)+'px', top : this.getPosTop( obj.x, obj.y)+'px'});
 
 		$(container).append(_str);
-
+	},
+	/*
+	*新棋子动画
+	*/
+	newCellAnimate : function() {
 		$('.cell:last').addClass('animate-new-cell');
 	},
 	/*

@@ -6,12 +6,18 @@
 *@param number 棋子数字
 *@show() 棋子的展示
 */
-function Cell(x, y, color,number){
+function Cell(x, y, color,number, x1, y1){
 	this.color = color;
 	this.number = number;
 	this.x = x;
 	this.y = y;
-	this.show = function(container, obj){
+	this.x1 = x1;
+	this.y1 = y1
+	this.show = function(container, obj, flag){
+		flag = flag || 0;
 		ui.showCell(container, obj);
+		if(flag === 1){//新棋子
+			ui.newCellAnimate();
+		}
 	};
 }

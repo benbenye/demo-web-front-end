@@ -26,28 +26,7 @@ function updateBorad(flag, obj){
 	}
 }
 
-// 手机端上1下2左3右4手势
-// document.getElementById('grid-container')
-// .addEventListener('touchstart',function(){
-// 	e.preventDefault();
-// 	var e = e.changedTouches[0];
-// 	start(e);
 
-// });
-
-// document.getElementById('grid-container')
-// .addEventListener('touchmove', function (e){
-// 	e.preventDefault();
-// 	var e = e.changedTouches[0];
-// 	move(e);
-// });
-
-// document.getElementById('grid-container')
-// .addEventListener('touchend', function (e){
-// 	e.preventDefault();
-// 	var e = e.changedTouches[0];
-// 	end(e);
-// });
 function moveleft(){
 	// 从左向右横向遍历
 	var tempArray = [],flag = false,merge = 1;

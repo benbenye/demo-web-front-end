@@ -12,24 +12,30 @@ header p{font: 25px arial; margin: 25px auto;}
 
 .cell{width: 100px;height: 100px;position: absolute;border-radius: 6px; text-align: center; line-height: 100px; font-size: 40px; font-weight: bold;}
 
-.c2{background: rgba(236, 228, 217, 1);}
-.c4{background: rgba(237, 222, 201, 1);}
-.c8{background: rgba(240, 176, 122, 1);color: #fff;}
-.c16{background: rgba(235, 141, 81, 1);color: #fff;}
-.c32{background: rgba(247, 122, 94, 1);color: #fff;}
-.c64{background: rgba(247, 122, 94, 1);color: #fff;}
+.c2{background: #ece4d9;}
+.c4{background: #eddec9;}
+.c8{background: #f2b179;color: #fff;}
+.c16{background: #f59563;color: #fff;}
+.c32{background: #f67c5f;color: #fff;}
+.c64{background: #f55e3b;color: #fff;}
+.c128{background: #f3d16d; color: #fff;}
+.c256{background: #ebcd5f; color: #fff;}
+.c512{background: #ecc84d; color: #fff;}
+.c1024{background: #ebc53e; color: #fff;}
+.c2048{background: #ebc32d; color: #fff;}
+.c4096{background: #383a2f; color: #fff;}
 
 .animate-new-cell{
-	-webkit-animation:pulse 1s .2s ease both;
-	animation:pulse 1s .2s ease both;
-	@-webkit-keyframes pulse{
-		0%{-webkit-transform:scale(1)}
-		50%{-webkit-transform:scale(1.1)}
-		100%{-webkit-transform:scale(1)}
-	}
-	@keyframes pulse{
-		0%{transform:scale(1)}
-		50%{transform:scale(1.1)}
-		100%{transform:scale(1)}
-	}
+	-webkit-animation:pulse .35s 0s ease both;
+	animation:pulse .35s 0s ease both;
+}
+@-webkit-keyframes pulse{
+	0%{-webkit-transform:scale(1)}
+	50%{-webkit-transform:scale(1.1)}
+	100%{-webkit-transform:scale(1)}
+}
+@keyframes pulse{
+	0%{transform:scale(1)}
+	50%{transform:scale(1.1)}
+	100%{transform:scale(1)}
 }

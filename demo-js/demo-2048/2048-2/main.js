@@ -36,4 +36,31 @@ function newgame(){
 		}
 	});
 
+/*document.getElementById('grid-container')
+.addEventListener('touchmove', function (e){
+	e.preventDefault();
+	var e = e.changedTouches[0];
+	move(e);
+});*/
+
+/*	document.getElementById('grid-container')
+	.addEventListener('touchstart',function(){
+		e.preventDefault();
+		var e = e.changedTouches[0];
+		start(e);
+	});
+
+
+	document.getElementById('grid-container')
+	.addEventListener('touchend', function (e){
+		e.preventDefault();
+		var e = e.changedTouches[0];
+		end(e);
+	});
+
+
+	function start(e) {
+		e.preventDefault();
+	}
+*/
 }
