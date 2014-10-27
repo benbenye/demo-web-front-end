@@ -34,6 +34,18 @@ var ui = {
 	newCellAnimate : function() {
 		$('.cell:last').addClass('animate-new-cell');
 	},
+
+	/*
+	*合并棋子动画
+	*/
+	mergeAnimate : function(firstObj, nextObj) {
+		$('#grid-cell'+firstObj.x+'-'+firstObj.y).animate({left: firstObj.x1});
+		$('#grid-cell'+nextObj.x+'-'+nextObj.y).animate({left: nextObj.x2},function() {
+			$('#grid-cell'+firstObj.x+'-'+firstObj.y).remove();
+			$(this).text(nextObj.number * 2);
+		});
+
+	},
 	/*
 	*getPosLeft() 得到棋子的左定位
 	*/

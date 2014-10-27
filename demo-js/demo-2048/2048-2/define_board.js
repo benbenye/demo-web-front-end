@@ -148,8 +148,6 @@ function Board(dimension,score,container){
 						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
 						tempArray.splice(m+1,1);
 						++merge;
-					}else{
-						continue;
 					}
 				}
 				for(var n = this.dimension - 1; n >= 0; --n){
@@ -229,7 +227,7 @@ function Board(dimension,score,container){
 	*/
 	this.moveLeft = function(){
 		// 从左向右横向遍历
-		var tempArray = [],//临时数组用于合并棋子
+	/*	var tempArray = [],//临时数组用于合并棋子
 			move = false,//是否移动棋子
 			merge = 0;//合并棋子对数
 
@@ -250,8 +248,6 @@ function Board(dimension,score,container){
 						// $('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
 						// tempArray.splice(m+1,1);
 						++merge;
-					}else{
-						continue;
 					}
 				}
 				for(var n = 0; n < this.dimension; ++n){
@@ -275,6 +271,42 @@ function Board(dimension,score,container){
 		this.updateEmpty(merge);
 		if(move || merge){
 			this.ranCell();
+		}*/
+		var firstCell = 0,
+			nextCell = 1,
+			destination = 0;//合并后的位置
+
+		for (var m = 0; m < this.dimension; ++m) {
+			if( this.cells[firstCell][m] ) {
+
+				if( this.cells[nextCell][m] ) {
+
+
+					//xiangdeng
+					if( destination === 0 ) {
+
+						this.cells[firstCell][m].x1 = this.cells[nextCell][m].x1 = destination;
+						ui.mergeAnimate(this.cells[firstCell][m], this.cells[nextCell][m]);
+						this.cells[firstCell][m].x1 = this.cells[firstCell][m].x;
+						this.cells[firstCell][m].y1 = this.cells[firstCell][m].y;
+						this.cells[firstCell][m].number = this.cells[firstCell][m].number * 2;
+						this.cells[firstCell][m].color = 'c' + this.cells[firstCell][m].number;
+
+						this.cells[nextCell][m] = undefined;
+
+						++destination;
+
+					}
+					
+
+				} else {//下一个是空格子
+					nextCell === 3 ? return : ++nextCell;
+				}
+
+			} else {//空格子
+				++firstCell;
+				++nextCell;
+			}
 		}
 	};
 	/*

@@ -334,12 +334,12 @@ sns：解决关注样式冲突
 
 /*2014-10-27 星期一 10:37:45*/
 1：新片场mobile
-	评论--评论查看更多数据
+	评论 √--评论查看更多数据
 		--回复评论时锚点定位
 	个人页面
 	统一icon
 	统一字号
-2：tower
+2：tower  √
 3：javascript高级程序设计
 	数据类型：boolean，Number，String，，，
 4: html5 canvas for QQ animate
