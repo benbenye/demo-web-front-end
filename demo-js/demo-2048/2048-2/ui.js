@@ -46,6 +46,24 @@ var ui = {
 		});
 
 	},
+
+	moveAnimate = function (obj, de) {
+		if(de){			
+			$('#grid-cell' + obj.x + '-' + obj.y).animate({
+				left : obj.x1
+			},function () {
+				$(this).remove();
+				obj.number = obj.number * 2;
+			});
+		} else {			
+			$('#grid-cell' + obj.x + '-' + obj.y).animate({
+				top : obj.y1
+			},function () {
+				$(this).remove();
+				obj.number = obj.number * 2;
+			});
+		}
+	};
 	/*
 	*getPosLeft() 得到棋子的左定位
 	*/

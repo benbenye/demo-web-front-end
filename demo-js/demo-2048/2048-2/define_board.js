@@ -272,13 +272,17 @@ function Board(dimension,score,container){
 		if(move || merge){
 			this.ranCell();
 		}*/
-		var firstCell = 0,
-			nextCell = 1,
+		var first = 0,
+			next = 1,
 			destination = 0;//合并后的位置
 
 		for (var m = 0; m < this.dimension; ++m) {
-			if( this.cells[firstCell][m] ) {
+			if( this.cells[first][m] ) {
 
+				next = this.findNextLeft(next, m);
+				if(next) {//zhao dao le xia yi ge zhi
+					this.compareX(first, next, m, 1);
+				}
 				if( this.cells[nextCell][m] ) {
 
 
@@ -331,6 +335,51 @@ function Board(dimension,score,container){
 			--this.empty;
 		}
 	};
+	/*
+	*find the next cell
+	*@next   the next cell
+	*@i suo zai hang huo zhe lie  
+	*/
+	this.findNextLeft = function(next,i) {
+		if(next > board.dimension || i > board.dimension) {
+			console.log('err');
+			break;
+		}
+
+		for( ; next <= board.dimension; ++next) {
+
+			if(board.cells[next][i]) {
+				return next;
+			}
+
+		}
+
+		if(next > board.dimension || next < 0) {
+			return -1;
+		}
+	};
+	/*
+	*bi jiao 
+	*@first 
+	*@next
+	*@m
+	*/
+	this.compareX = function(f, n, m, de) {
+		if( this.cells[f][m].number === this.cells[n][m] ) {
+			if(de) {//xiang zuo he bing
+				this.cells[n][m].x1 = this.cells[f][m].x;
+				this.cells[n][m].y1 = this.cells[f][m].y;
+				this.cells[f][m].color = 'c' + this.cells[f][m].number * 2;
+
+				ui.moveAnimate(this.cells[n][m], de);
+			} else {//shang xia you 
+
+			}
+		} else {//buxiangdeng
+			
+		}
+	};
+
 	/*
 	*合并了的无用棋子的销毁
 	*/
