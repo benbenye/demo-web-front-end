@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../../demo-public/js/jquery.js"></script>
+	<style>
+						
+/* 点赞 Start */
+.mepraise {
+	height: 50px;
+	padding: 20px 25px;
+}
+.mepraise em {
+	height: 50px;
+	line-height: 52px;
+}
+.mepraise .click-collec {
+	height: 50px;
+}
+.mepraise .click-collec i {
+	height: 50px;
+}
+.mepraise .click-collec strong {
+	height: 50px;
+	line-height: 50px;
+}
+
+/* 点赞等级 */
+.grows-one .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat 0 -200px;
+}
+.grows-two .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat 0 -150px;
+}
+.grows-three .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat 0 -100px;
+}
+.grows-four .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat 0 -50px;
+}
+.grows-five .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat 0 0;
+}
+/* 已经点赞等级 */
+.grows-one-ok .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -50px -200px;
+}
+.grows-two-ok .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -50px -150px;
+}
+.grows-three-ok .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -50px -100px;
+}
+.grows-four-ok .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -50px -50px;
+}
+.grows-five-ok .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -50px 0;
+}
+
+/* 鼠标经过 */
+
+.show-grows a:hover {
+	background-color: #3498db;
+}
+.show-grows a:hover em {
+	color: #FFF;
+}
+.show-grows a:hover .click-collec i {
+	background-position: 0 -50px;
+}
+.show-grows a:hover .click-collec strong {
+	color: #FFF;
+}
+
+.mone  a:hover .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -100px -200px;
+}
+.mtwo  a:hover .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -100px -150px;
+}
+.mthree  a:hover .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -100px -100px;
+}
+.mfour  a:hover .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -100px -50px;
+}
+.mfive  a:hover .click-collec i {
+	background: url('../img/show-praise-icon.png') no-repeat -100px 0;
+}
+
+
+/* 点赞 END */
+	</style>
+</head>
+<body>
+	<a id="grows" href="javascript:;" class=" grows-one-ok mepraise show-all-icon" data="ungrows">
+					<em class="fr">感谢您的肯定 4/10</em>
+					<span class="click-collec">
+						<i></i>
+						<strong>后悔？</strong>
+					</span>
+				</a>
+
+<script>
+$(document).ready(function(){
+
+		$('#grows').click(function(){
+			var ct, data = $(this).attr('data'), $this = $('#grows');
+			if ( data == 'grows' ) {
+				ct = 'add';
+			}
+			if ( data == 'ungrows' ) {
+				ct = 'del';
+			};
+			if ( data == 'grows' ) {
+				$this.attr('data', 'ungrows');
+				$this.removeClass('grows-one');
+				$this.addClass('grows-one-ok');		
+				$this.find('strong').text('我赞了');
+				$this.find('em').text(23);
+			}
+			if ( data == 'ungrows' ) {
+				$this.attr('data', 'grows');
+				$this.removeClass('grows-one-ok');
+				$this.addClass('grows-one');
+				$this.find('strong').text('赞');
+				$this.find('em').text(43);
+			}
+			return false;
+		});
+		
+		$('#grows').hover(function(){
+			var data = $(this).attr('data');
+			if ( data == 'ungrows' ) {
+				$(this).find('strong').text('后悔？');
+			}
+		},function(){
+			var data = $(this).attr('data');
+			if ( data == 'ungrows' ) {
+				$(this).find('strong').text('我赞了');
+			}
+		});
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>waterfall</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<style>
+		.container{width: 960px; margin: 0 auto; position: relative;}
+		.pic{width: 165px; padding: 10px; border: 2px solid red; border-radius: 4px; margin-bottom: 10px;
+			/*display: inline-block; *display: inline; *zoom: 1; vertical-align: middle;*/
+			/*float: left;*/
+			position: absolute;
+		}
+		.pic img{display: block; width: 165px;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="120"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="130"></div>
+		<div class="pic"><img src="" alt="" height="90"></div>
+		<div class="pic"><img src="" alt="" height="110"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="150"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="140"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="170"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="90"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="70"></div>
+		<div class="pic"><img src="" alt="" height="120"></div>
+		<div class="pic"><img src="" alt="" height="150"></div>
+		<div class="pic"><img src="" alt="" height="140"></div>
+		<div class="pic"><img src="" alt="" height="120"></div>
+		<div class="pic"><img src="" alt="" height="160"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="70"></div>
+		<div class="pic"><img src="" alt="" height="80"></div>
+		<div class="pic"><img src="" alt="" height="90"></div>
+		<div class="pic"><img src="" alt="" height="140"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="130"></div>
+		<div class="pic"><img src="" alt="" height="100"></div>
+		<div class="pic"><img src="" alt="" height="110"></div>
+	</div>
+	<script>
+	$(document).ready(function(){
+		var heights = [{i:0,heights:0},{i:0,heights:0},{i:0,heights:0},{i:0,heights:0}],
+			mr = 10, mb = 10, cloumns = 4, pd = 20,
+			width = $('.pic').width();
+
+		$('.pic').each(function(i){
+			if(i < cloumns){
+				$(this).css({top : 0, left : (width + mr + pd) * i + 'px'});
+				heights[i].i = i;
+				heights[i].heights = $(this).height() + mb + pd;
+			}else{
+				heights = sort(heights,'heights');
+				$(this).css({ top : heights[0].heights, left : (width + mr + pd) * heights[0].i });
+				heights[0].heights += ($(this).height() + mb + pd);
+			}
+		});
+
+		function sort(arr, sortBy){
+			return arr.sort(function(a,b){return -b[sortBy] + a[sortBy];});
+		}
+	});
+	</script>
+</body>
+</html>

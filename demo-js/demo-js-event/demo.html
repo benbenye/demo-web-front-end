@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="../../demo-public/js/jquery.js"></script>
+</head>
+<body>
+	<div  id="baidu" target="_blank">baidu</div>
+	<div  id="mi" target="_blank">mi</div>
+	<script>
+	$('#mi').click(function(a) {
+		// body...
+		console.log('mi');
+		$('#baidu').trigger('click');
+		console.log(a);
+	})
+	</script>
+</body>
+</html>

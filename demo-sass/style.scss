@@ -1,0 +1,26 @@
+//this is a sass file
+$color:#888;
+$bgColor:#f33;
+header{
+	color: $color;
+	background-color: $bgColor;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+.webqq{
+	width: 200px;
+	height: 250px;
+	border: 1px solid #000;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	.drag-area{
+		width: 100px;
+		height: 50px;
+		border: 1px solid blue;
+		cursor: move;
+		margin: 10px;
+	}
+}
