@@ -277,40 +277,36 @@ function Board(dimension,score,container){
 			destination = 0;//合并后的位置
 
 		for (var m = 0; m < this.dimension; ++m) {
-			if( this.cells[first][m] ) {
 
-				next = this.findNextLeft(next, m);
-				if(next) {//zhao dao le xia yi ge zhi
-					this.compareX(first, next, m, 1);
-				}
-				if( this.cells[nextCell][m] ) {
+			for ( ; first < this.dimension; ) {
 
+				if( this.cells[first][m] ) {
 
-					//xiangdeng
-					if( destination === 0 ) {
+					next = this.findNextLeft(next, m);
 
-						this.cells[firstCell][m].x1 = this.cells[nextCell][m].x1 = destination;
-						ui.mergeAnimate(this.cells[firstCell][m], this.cells[nextCell][m]);
-						this.cells[firstCell][m].x1 = this.cells[firstCell][m].x;
-						this.cells[firstCell][m].y1 = this.cells[firstCell][m].y;
-						this.cells[firstCell][m].number = this.cells[firstCell][m].number * 2;
-						this.cells[firstCell][m].color = 'c' + this.cells[firstCell][m].number;
+					if(next!=-1) {//找到了一个值
 
-						this.cells[nextCell][m] = undefined;
-
-						++destination;
+						this.compareX(first, next, m, 1);
 
 					}
-					
 
-				} else {//下一个是空格子
-					nextCell === 3 ? return : ++nextCell;
+				} else {//空格子
+
+					if( (++first >= this.dimension ? -1 : first) != -1 ) {
+
+						if( (++ next > this.dimension ? -1 : next) != -1 ) {
+							//只有一个值的时候怎么处理
+							break;
+						}
+
+					} else {
+						console.log('空行、列');
+						break;
+					}
+					
 				}
 
-			} else {//空格子
-				++firstCell;
-				++nextCell;
-			}
+			};			
 		}
 	};
 	/*
@@ -336,47 +332,61 @@ function Board(dimension,score,container){
 		}
 	};
 	/*
-	*find the next cell
-	*@next   the next cell
-	*@i suo zai hang huo zhe lie  
+	*找到下一个不为空的位置
+	*@next    		要找下一个不为空的位置的起始坐标
+	*@i  			所在行、列 的坐标  
 	*/
 	this.findNextLeft = function(next,i) {
-		if(next > board.dimension || i > board.dimension) {
+		if(next > this.dimension || i > this.dimension) {
 			console.log('err');
-			break;
+			return;
 		}
 
-		for( ; next <= board.dimension; ++next) {
+		for( ; next < this.dimension; ++next) {
 
-			if(board.cells[next][i]) {
+			if(this.cells[next][i]) {
 				return next;
 			}
 
 		}
 
-		if(next > board.dimension || next < 0) {
+		if(next >= this.dimension || next < 0) {
 			return -1;
 		}
 	};
 	/*
-	*bi jiao 
-	*@first 
-	*@next
-	*@m
+	*比较
+	*@f           第一个对比的坐标
+	*@n           与f相邻第一个不为空的位置
+	*@m           单轮循环内保持不变的横坐标或者纵坐标
+	*@de          合并方向 1表示横向 0表示纵向
 	*/
 	this.compareX = function(f, n, m, de) {
-		if( this.cells[f][m].number === this.cells[n][m] ) {
-			if(de) {//xiang zuo he bing
+		if ( this.cells[f][m].number === this.cells[n][m] ) {
+			if (de) {//横向合并
+
 				this.cells[n][m].x1 = this.cells[f][m].x;
-				this.cells[n][m].y1 = this.cells[f][m].y;
 				this.cells[f][m].color = 'c' + this.cells[f][m].number * 2;
 
-				ui.moveAnimate(this.cells[n][m], de);
-			} else {//shang xia you 
+				ui.moveAnimate(this.cells[n][m], de, function () {
+					this.cells[n][m] = undefined;
+				});
+
+			} else {//纵向合并 
 
 			}
-		} else {//buxiangdeng
-			
+		} else {//f n 不相等
+			if( n > f && de ) {
+
+				this.cells[n][m].x1 = f + 1;
+
+			} else {//不定
+				// this.cells[n][m].
+			}
+			ui.moveAnimate(this.cells[n][m], de, function(){
+				//do nothing
+			});
+
 		}
 	};
 

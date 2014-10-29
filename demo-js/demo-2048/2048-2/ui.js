@@ -37,23 +37,29 @@ var ui = {
 
 	/*
 	*合并棋子动画
+	*@obj           要合并对象
 	*/
-	mergeAnimate : function(firstObj, nextObj) {
-		$('#grid-cell'+firstObj.x+'-'+firstObj.y).animate({left: firstObj.x1});
-		$('#grid-cell'+nextObj.x+'-'+nextObj.y).animate({left: nextObj.x2},function() {
-			$('#grid-cell'+firstObj.x+'-'+firstObj.y).remove();
-			$(this).text(nextObj.number * 2);
-		});
+	mergeAnimate : function(obj) {
+
+		$('#grid-cell'+obj.x+'-'+obj.y)
+			.text(obj.number * 2)
+			.addClass('animate-new-cell');
 
 	},
-
-	moveAnimate = function (obj, de) {
-		if(de){			
+	/*
+	*棋子移动动画
+	*@obj           要移动的对象
+	*@de            移动方向 1表示横向 0表示纵向
+	*@callback      动画执行完毕后 在数组中删除数据
+	*/
+	moveAnimate : function (obj, de, callback) {
+		if (de) {			
 			$('#grid-cell' + obj.x + '-' + obj.y).animate({
 				left : obj.x1
 			},function () {
 				$(this).remove();
 				obj.number = obj.number * 2;
+				callback();
 			});
 		} else {			
 			$('#grid-cell' + obj.x + '-' + obj.y).animate({
@@ -61,9 +67,10 @@ var ui = {
 			},function () {
 				$(this).remove();
 				obj.number = obj.number * 2;
+				callback();
 			});
 		}
-	};
+	},
 	/*
 	*getPosLeft() 得到棋子的左定位
 	*/
