@@ -7,8 +7,8 @@
 *@show() 棋子的展示
 */
 function Cell(x, y, color,number, x1, y1){
-	this.color = color;
 	this.number = number;
+	this.color = color;
 	this.x = x;
 	this.y = y;
 	this.x1 = x1;

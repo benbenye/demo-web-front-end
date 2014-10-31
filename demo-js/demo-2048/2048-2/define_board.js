@@ -282,31 +282,58 @@ function Board(dimension,score,container){
 
 				if( this.cells[first][m] ) {
 
-					next = this.findNextLeft(next, m);
+					next = this.findNextLeft(next+1, m);
 
-					if(next!=-1) {//找到了一个值
+					if(next != -1) {//找到了一个值
 
-						this.compareX(first, next, m, 1);
+						if( this.compare(first, next, m, 1) === 1 ) {
 
+							first += 1;
+							next += 1;
+
+						} else if( this.compare(first, next, m, 1) === 2 ) {
+
+							first += 2;
+							next += 2;
+
+						} else {
+
+							console.log('err');
+							break;
+
+						}
+
+					} else {
+						//只有一个值
+						ui.moveAnimate(this.cells[first][m], 1, function(){
+							
+							first = 0;
+							next = 1;
+
+						});
 					}
 
 				} else {//空格子
 
-					if( (++first >= this.dimension ? -1 : first) != -1 ) {
+					first = this.findFirstLeft(first, m);
 
-						if( (++ next > this.dimension ? -1 : next) != -1 ) {
-							//只有一个值的时候怎么处理
-							break;
-						}
+					if( first != -1 ) {
+
+						continue;//找到了第一个不为空的
 
 					} else {
 						console.log('空行、列');
+						first = 0;
+						next = 1;
 						break;
 					}
 					
 				}
 
-			};			
+			};
+
+			first = 0;
+			next = 1;		
 		}
 	};
 	/*
@@ -354,6 +381,31 @@ function Board(dimension,score,container){
 			return -1;
 		}
 	};
+
+	/*
+	*当first为空的时候， 查找下一个不为空的
+	*@first 开始坐标
+	*@m  所在行、列的坐标
+	*/
+
+	this.findFirstLeft = function ( first, m ) {
+		if(first > this.dimension || m > this.dimension) {
+			console.log('err');
+			return;
+		}
+
+		for( first += 1; first < this.dimension; ) {
+			if( this.cells[first][m] ) {
+				return first;
+			} else {
+				first += 1;
+				if(first >= this.dimension) {
+					return -1;
+				}
+			}
+		}
+	};
+
 	/*
 	*比较
 	*@f           第一个对比的坐标
@@ -361,31 +413,64 @@ function Board(dimension,score,container){
 	*@m           单轮循环内保持不变的横坐标或者纵坐标
 	*@de          合并方向 1表示横向 0表示纵向
 	*/
-	this.compareX = function(f, n, m, de) {
-		if ( this.cells[f][m].number === this.cells[n][m] ) {
-			if (de) {//横向合并
+	this.compare = function(f, n, m, de) {
+		if (de) {//横向合并
+			if ( this.cells[f][m].number === this.cells[n][m] ) {
 
 				this.cells[n][m].x1 = this.cells[f][m].x;
 				this.cells[f][m].color = 'c' + this.cells[f][m].number * 2;
 
 				ui.moveAnimate(this.cells[n][m], de, function () {
 					this.cells[n][m] = undefined;
+					return 1;
 				});
 
-			} else {//纵向合并 
+			} else {//f n 不相等
+				if( n > f && de ) {//向左
 
+					this.cells[n][m].x1 = f + 1;
+					ui.moveAnimate(this.cells[n][m], de, function(){
+						return 2;
+					});
+
+				} else if ( n < f && de ) {//向右
+
+					this.cells[n][m].x1 = f - 1;
+					ui.moveAnimate(this.cells[n][m], de, function(){
+						return 2;
+					});
+
+				} 
 			}
-		} else {//f n 不相等
-			if( n > f && de ) {
+		} else {//纵向合并 
 
-				this.cells[n][m].x1 = f + 1;
+			if ( this.cells[m][f].number === this.cells[m][n] ) {
 
-			} else {//不定
-				// this.cells[n][m].
+				this.cells[m][n].y1 = this.cells[m][f].y;
+				this.cells[m][f].color = 'c' + this.cells[m][f].number * 2;
+
+				ui.moveAnimate(this.cells[m][n], de, function () {
+					this.cells[m][n] = undefined;
+					return 1;
+				});
+
+			} else {
+				if ( n > f && !de ) {//向上
+
+					this.cells[m][n].y1 = f + 1;
+					ui.moveAnimate(this.cells[m][n], de, function(){
+						return 2;
+					});
+
+				}else if ( n < f && !de ) {//向下
+
+					this.cells[m][n].y1 = f - 1;
+					ui.moveAnimate(this.cells[m][n], de, function(){
+						return 2;
+					});
+
+				}
 			}
-			ui.moveAnimate(this.cells[n][m], de, function(){
-				//do nothing
-			});
 
 		}
 	};
