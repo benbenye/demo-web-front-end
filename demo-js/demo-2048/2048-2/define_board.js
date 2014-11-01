@@ -129,46 +129,62 @@ function Board(dimension,score,container){
 	*/
 	this.moveRight = function(){
 		// 从右向左横向遍历
-		var tempArray = [],//临时数组用于合并棋子
-			move = false,//是否移动棋子
-			merge = 0;//合并棋子对数
+		var first ,next, move, merge = 0;//合并后的位置
 
-		for(var i = 0; i < this.dimension; ++i){
-			for(var j = this.dimension - 1; j >= 0; --j){
-				if(this.cells[j][i]){
-					tempArray.push(this.cells[j][i]);
-					this.cells[j][i]= undefined;
-				}
-			}
-			if(tempArray.length>=1){
-				for(var m = 0; m < tempArray.length -1; ++m){
-					if(tempArray[m].number === tempArray[m+1].number){
-						tempArray[m].number = tempArray[m].number*2;
-						tempArray[m].color = 'c' + tempArray[m].number;
-						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
-						tempArray.splice(m+1,1);
-						++merge;
+		for (var m = this.dimension; m > 0; --m) {
+
+			first = this.dimension;
+			next = first -1;	
+
+			for ( ; first > 0; ) {
+				next = this.findNext(next,m);
+
+				if( this.cells[first][m] ) {
+
+					if(next != -1){
+
+						if( this.cells[first][m].number === this.cells[next][m].number ) {
+							this.cells[first][m].number *= 2;
+							this.cells[first][m].color = 'c' + this.cells[first][m].number;
+
+							ui.mergeAnimate(this.cells[first][m], this.cells[next][m]);
+							this.cells[next][m] = undefined;
+							++merge;
+						} else {
+							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],1);
+
+							if(first + 1 !== next){
+								this.cells[first + 1][m] = this.cells[next][m];
+								this.cells[first + 1][m].x = first + 1;
+								this.cells[next][m] = undefined;
+
+								move = 1;
+							}
+						}
+						++first;
+					} else {
+						break;
+					}
+					
+				} else {
+
+					if(next != -1) {
+						ui.moveAnimate(first, this.cells[next][m], 0);
+						this.cells[first][m] = this.cells[next][m];
+						this.cells[first][m].x = first;
+						this.cells[next][m] = undefined;
+						move = 1;
+					} else {
+
+						break;
+
 					}
 				}
-				for(var n = this.dimension - 1; n >= 0; --n){
-					this.cells[n][i] = tempArray[this.dimension - 1 - n];
-				}
-			}
-			//展示
-			for(var k = this.dimension - 1; k >= 0; --k){
-				if(this.cells[k][i]){
-					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
-					if(!merge && this.cells[k][i].x != k) {
-						move = true;
-					}
-					this.cells[k][i].x=k;
-					this.cells[k][i].y=i;
-					ui.showCell(this.container, this.cells[k][i]);
-				}
-			}
-			tempArray=[];
+				++next;
+			};	
 		}
-		this.updateEmpty(merge);
+
+
 		if(move || merge){
 			this.ranCell();
 		}
@@ -227,114 +243,75 @@ function Board(dimension,score,container){
 	*/
 	this.moveLeft = function(){
 		// 从左向右横向遍历
-	/*	var tempArray = [],//临时数组用于合并棋子
-			move = false,//是否移动棋子
-			merge = 0;//合并棋子对数
-
-		for(var i = 0; i < this.dimension; ++i){
-			for(var j = 0; j < this.dimension; ++j){
-				if(this.cells[j][i]){
-					tempArray.push(this.cells[j][i]);
-				}
-			}
-			if(tempArray.length>=1){
-				for(var m = 0; m < tempArray.length -1; ++m){
-					if(tempArray[m].number === tempArray[m+1].number){
-						tempArray[m].number = tempArray[m].number*2;
-						tempArray[m].color = 'c' + tempArray[m].number;
-						tempArray[m+1].x1 = tempArray[m].x;
-						tempArray[m+1].y1 = tempArray[m].y;
-						++m;
-						// $('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
-						// tempArray.splice(m+1,1);
-						++merge;
-					}
-				}
-				for(var n = 0; n < this.dimension; ++n){
-					this.cells[n][i] = tempArray[n];
-				}
-			}
-			//展示
-			for(var k = 0; k < this.dimension; ++k){
-				if(this.cells[k][i]){
-					$('#grid-cell-'+this.cells[k][i].x+'-'+this.cells[k][i].y).detach();
-					if(!merge && this.cells[k][i].x != k) {
-						move = true;
-					}
-					this.cells[k][i].x=k;
-					this.cells[k][i].y=i;
-					ui.showCell(this.container, this.cells[k][i]);
-				}
-			}
-			tempArray=[];
-		}
-		this.updateEmpty(merge);
-		if(move || merge){
-			this.ranCell();
-		}*/
-		var first = 0,
-			next = 1,
-			destination = 0;//合并后的位置
+		var first ,next, move, merge = 0;//合并后的位置
 
 		for (var m = 0; m < this.dimension; ++m) {
 
-			for ( ; first < this.dimension; ) {
+			first = 0;
+			next = 1;	
+
+			for ( ; first < this.dimension - 1; ) {
+				next = this.findNext(next,m);
 
 				if( this.cells[first][m] ) {
 
-					next = this.findNextLeft(next+1, m);
+					if(next != -1){
 
-					if(next != -1) {//找到了一个值
+						if( this.cells[first][m].number === this.cells[next][m].number ) {
+							this.cells[first][m].number *= 2;
+							this.cells[first][m].color = 'c' + this.cells[first][m].number;
 
-						if( this.compare(first, next, m, 1) === 1 ) {
-
-							first += 1;
-							next += 1;
-
-						} else if( this.compare(first, next, m, 1) === 2 ) {
-
-							first += 2;
-							next += 2;
-
+							ui.mergeAnimate(this.cells[first][m], this.cells[next][m]);
+							this.cells[next][m] = undefined;
+							++merge;
 						} else {
+							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],1);
 
-							console.log('err');
-							break;
+							if(first + 1 !== next){
+								this.cells[first + 1][m] = this.cells[next][m];
+								this.cells[first + 1][m].x = first + 1;
+								this.cells[next][m] = undefined;
 
+								move = 1;
+							}
 						}
-
+						++first;
 					} else {
-						//只有一个值
-						ui.moveAnimate(this.cells[first][m], 1, function(){
-							
-							first = 0;
-							next = 1;
-
-						});
-					}
-
-				} else {//空格子
-
-					first = this.findFirstLeft(first, m);
-
-					if( first != -1 ) {
-
-						continue;//找到了第一个不为空的
-
-					} else {
-						console.log('空行、列');
-						first = 0;
-						next = 1;
 						break;
 					}
 					
+				} else {
+
+					if(next != -1) {
+						ui.moveAnimate(first, this.cells[next][m], 0);
+						this.cells[first][m] = this.cells[next][m];
+						this.cells[first][m].x = first;
+						this.cells[next][m] = undefined;
+						move = 1;
+					} else {
+
+						break;
+
+					}
 				}
-
-			};
-
-			first = 0;
-			next = 1;		
+				++next;
+			};	
 		}
+		this.updateEmpty(merge);
+		if(move || merge){
+			var _this = this;
+			setTimeout(function() {
+				_this.ranCell();
+			}, 200);
+		}
+		for(var q = 0; q < this.dimension; ++q){
+			var line = '';
+			for( var w = 0; w < this.dimension; ++w){
+				line = line + ' ' + (this.cells[w][q] !== undefined? this.cells[w][q].number:0);
+			}
+			console.log(line);
+		}
+		console.log('-----------------------');
 	};
 	/*
 	*计算游戏分数
@@ -363,116 +340,17 @@ function Board(dimension,score,container){
 	*@next    		要找下一个不为空的位置的起始坐标
 	*@i  			所在行、列 的坐标  
 	*/
-	this.findNextLeft = function(next,i) {
-		if(next > this.dimension || i > this.dimension) {
-			console.log('err');
-			return;
-		}
+	this.findNext = function(next, m) {
 
-		for( ; next < this.dimension; ++next) {
+		for( ; next < this.dimension; ++next ) {
 
-			if(this.cells[next][i]) {
+			if(this.cells[next][m]) {
 				return next;
 			}
 
-		}
+		};
 
-		if(next >= this.dimension || next < 0) {
-			return -1;
-		}
-	};
-
-	/*
-	*当first为空的时候， 查找下一个不为空的
-	*@first 开始坐标
-	*@m  所在行、列的坐标
-	*/
-
-	this.findFirstLeft = function ( first, m ) {
-		if(first > this.dimension || m > this.dimension) {
-			console.log('err');
-			return;
-		}
-
-		for( first += 1; first < this.dimension; ) {
-			if( this.cells[first][m] ) {
-				return first;
-			} else {
-				first += 1;
-				if(first >= this.dimension) {
-					return -1;
-				}
-			}
-		}
-	};
-
-	/*
-	*比较
-	*@f           第一个对比的坐标
-	*@n           与f相邻第一个不为空的位置
-	*@m           单轮循环内保持不变的横坐标或者纵坐标
-	*@de          合并方向 1表示横向 0表示纵向
-	*/
-	this.compare = function(f, n, m, de) {
-		if (de) {//横向合并
-			if ( this.cells[f][m].number === this.cells[n][m] ) {
-
-				this.cells[n][m].x1 = this.cells[f][m].x;
-				this.cells[f][m].color = 'c' + this.cells[f][m].number * 2;
-
-				ui.moveAnimate(this.cells[n][m], de, function () {
-					this.cells[n][m] = undefined;
-					return 1;
-				});
-
-			} else {//f n 不相等
-				if( n > f && de ) {//向左
-
-					this.cells[n][m].x1 = f + 1;
-					ui.moveAnimate(this.cells[n][m], de, function(){
-						return 2;
-					});
-
-				} else if ( n < f && de ) {//向右
-
-					this.cells[n][m].x1 = f - 1;
-					ui.moveAnimate(this.cells[n][m], de, function(){
-						return 2;
-					});
-
-				} 
-			}
-		} else {//纵向合并 
-
-			if ( this.cells[m][f].number === this.cells[m][n] ) {
-
-				this.cells[m][n].y1 = this.cells[m][f].y;
-				this.cells[m][f].color = 'c' + this.cells[m][f].number * 2;
-
-				ui.moveAnimate(this.cells[m][n], de, function () {
-					this.cells[m][n] = undefined;
-					return 1;
-				});
-
-			} else {
-				if ( n > f && !de ) {//向上
-
-					this.cells[m][n].y1 = f + 1;
-					ui.moveAnimate(this.cells[m][n], de, function(){
-						return 2;
-					});
-
-				}else if ( n < f && !de ) {//向下
-
-					this.cells[m][n].y1 = f - 1;
-					ui.moveAnimate(this.cells[m][n], de, function(){
-						return 2;
-					});
-
-				}
-			}
-
-		}
+		return -1;
 	};
 
 	/*

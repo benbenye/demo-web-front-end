@@ -5,6 +5,7 @@
 *@param color 棋子颜色
 *@param number 棋子数字
 *@show() 棋子的展示
+
 */
 function Cell(x, y, color,number, x1, y1){
 	this.number = number;

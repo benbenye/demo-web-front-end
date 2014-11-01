@@ -26,8 +26,8 @@ header p{font: 25px arial; margin: 25px auto;}
 .c4096{background: #383a2f; color: #fff;}
 
 .animate-new-cell{
-	-webkit-animation:pulse .35s 0s ease both;
-	animation:pulse .35s 0s ease both;
+	-webkit-animation:pulse .1s 0s ease both;
+	animation:pulse .1s 0s ease both;
 }
 @-webkit-keyframes pulse{
 	0%{-webkit-transform:scale(1)}

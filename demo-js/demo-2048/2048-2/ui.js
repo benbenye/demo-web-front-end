@@ -10,7 +10,7 @@ var ui = {
 
 		for (var i = 0; i < dimension; i++) {
 			for(var j = 0; j < dimension; j++){
-				var gridCell = $('<div class="grid-cell" id="#grid-cell-' + i + '-' + j+'"></div>');
+				var gridCell = $('<div class="grid-cell" id="cell-' + i + '-' + j+'"></div>');
 
 				gridCell.css({ left : this.getPosTop( i, j)+'px', top : this.getPosLeft( i, j)+'px'});
 
@@ -39,12 +39,16 @@ var ui = {
 	*合并棋子动画
 	*@obj           要合并对象
 	*/
-	mergeAnimate : function(obj) {
-
-		$('#grid-cell'+obj.x+'-'+obj.y)
-			.text(obj.number * 2)
-			.addClass('animate-new-cell');
-
+	mergeAnimate : function(objFirst, objNext) {
+		$('#grid-cell-'+objNext.x+'-'+objNext.y).animate({
+			left : ui.getPosLeft(objFirst.x)
+		},200,function(){
+			// $(this).remove();
+			$('#grid-cell-'+objNext.x + '-' + objNext.y).remove();
+			$('#grid-cell-'+objFirst.x+'-'+objFirst.y)
+			.text(objFirst.number)
+			.addClass(objFirst.color).addClass('animate-new-cell');
+		});
 	},
 	/*
 	*棋子移动动画
@@ -52,24 +56,11 @@ var ui = {
 	*@de            移动方向 1表示横向 0表示纵向
 	*@callback      动画执行完毕后 在数组中删除数据
 	*/
-	moveAnimate : function (obj, de, callback) {
-		if (de) {			
-			$('#grid-cell' + obj.x + '-' + obj.y).animate({
-				left : obj.x1
-			},function () {
-				$(this).remove();
-				obj.number = obj.number * 2;
-				callback();
-			});
-		} else {			
-			$('#grid-cell' + obj.x + '-' + obj.y).animate({
-				top : obj.y1
-			},function () {
-				$(this).remove();
-				obj.number = obj.number * 2;
-				callback();
-			});
-		}
+	moveAnimate : function (first, objNext, flag) {
+		
+		$('#grid-cell-' + objNext.x + '-' + objNext.y).animate({
+			left : ui.getPosLeft(first+flag)
+		},200).attr('id','grid-cell-' + (first+flag) +'-'+objNext.y);
 	},
 	/*
 	*getPosLeft() 得到棋子的左定位
