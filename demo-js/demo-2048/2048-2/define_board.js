@@ -102,9 +102,10 @@ function Board(dimension,score,container){
 							this.cells[m][next] = undefined;
 							++merge;
 						} else {
-							ui.moveAnimateY(this.cells[m][first].y, this.cells[m][next], 1);
 
 							if(first + 1 !== next){
+								console.log('first:'+first+';next:'+next);
+								ui.moveAnimateY(first+1, this.cells[m][next]);
 								this.cells[m][first + 1] = this.cells[m][next];
 								this.cells[m][first + 1].y = first + 1;
 								this.cells[m][next] = undefined;
@@ -120,7 +121,8 @@ function Board(dimension,score,container){
 				} else {
 
 					if(next != -1) {
-						ui.moveAnimateY(first, this.cells[m][next], 0);
+								console.log('first:'+first+';next:'+next);
+						ui.moveAnimateY(first, this.cells[m][next]);
 						this.cells[m][first] = this.cells[m][next];
 						this.cells[m][first].y = first;
 						this.cells[m][next] = undefined;
@@ -135,8 +137,10 @@ function Board(dimension,score,container){
 			};	
 		}
 		if(move || merge){
-			this.ranCell();
-		}
+			var _this = this;
+			setTimeout(function() {
+				_this.ranCell();
+			}, 200);		}
 		for(var q = 0; q < this.dimension; ++q){
 			var line = '';
 			for( var w = 0; w < this.dimension; ++w){
@@ -174,9 +178,10 @@ function Board(dimension,score,container){
 							this.cells[next][m] = undefined;
 							++merge;
 						} else {
-							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],-1);
 
 							if(first - 1 !== next){
+								console.log('first:'+first+';next:'+next);
+								ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],-1);
 								this.cells[first - 1][m] = this.cells[next][m];
 								this.cells[first - 1][m].x = first - 1;
 								this.cells[next][m] = undefined;
@@ -192,6 +197,7 @@ function Board(dimension,score,container){
 				} else {
 
 					if(next != -1) {
+						console.log('first:'+first+';next:'+next);
 						ui.moveAnimate(first, this.cells[next][m], 0);
 						this.cells[first][m] = this.cells[next][m];
 						this.cells[first][m].x = first;
@@ -207,7 +213,10 @@ function Board(dimension,score,container){
 			};	
 		}
 		if(move || merge){
-			this.ranCell();
+			var _this = this;
+			setTimeout(function() {
+				_this.ranCell();
+			}, 200);
 		}
 		for(var q = 0; q < this.dimension; ++q){
 			var line = '';
@@ -295,9 +304,10 @@ function Board(dimension,score,container){
 							this.cells[next][m] = undefined;
 							++merge;
 						} else {
-							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],1);
 
 							if(first + 1 !== next){
+								console.log('first:'+first+';next:'+next);
+								ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],1);
 								this.cells[first + 1][m] = this.cells[next][m];
 								this.cells[first + 1][m].x = first + 1;
 								this.cells[next][m] = undefined;
@@ -313,6 +323,7 @@ function Board(dimension,score,container){
 				} else {
 
 					if(next != -1) {
+								console.log('first:'+first+';next:'+next);
 						ui.moveAnimate(first, this.cells[next][m], 0);
 						this.cells[first][m] = this.cells[next][m];
 						this.cells[first][m].x = first;
@@ -329,10 +340,10 @@ function Board(dimension,score,container){
 		}
 		this.updateEmpty(merge);
 		if(move || merge){
-				this.ranCell();
-			// var _this = this;
-			// setTimeout(function() {
-			// }, 200);
+			var _this = this;
+			setTimeout(function() {
+				_this.ranCell();
+			}, 200);
 		}
 		for(var q = 0; q < this.dimension; ++q){
 			var line = '';

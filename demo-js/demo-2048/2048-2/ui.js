@@ -40,14 +40,20 @@ var ui = {
 	*@obj           要合并对象
 	*/
 	mergeAnimate : function(objFirst, objNext) {
-		$('#grid-cell-'+objNext.x+'-'+objNext.y).animate({
-			left : ui.getPosLeft(objFirst.x)
+		var firstX = objFirst.x,
+			firstY = objFirst.y,
+			nextX = objNext.x,
+			nextY = objNext.y,
+			firstNum = objFirst.number,
+			firstCol = objFirst.color;
+		$('#grid-cell-'+nextX+'-'+nextY).animate({
+			left : ui.getPosLeft(firstX)
 		},200,function(){
 			// $(this).remove();
-			$('#grid-cell-'+objNext.x + '-' + objNext.y).remove();
-			$('#grid-cell-'+objFirst.x+'-'+objFirst.y)
-			.text(objFirst.number)
-			.addClass(objFirst.color).addClass('animate-new-cell');
+			$('#grid-cell-'+nextX + '-' + nextY).remove();
+			$('#grid-cell-'+firstX+'-'+firstY)
+			.text(firstNum)
+			.addClass(firstCol).addClass('animate-new-cell');
 		});
 	},
 	/*
@@ -55,14 +61,20 @@ var ui = {
 	*@obj           要合并对象
 	*/
 	mergeAnimateY : function(objFirst, objNext) {
-		$('#grid-cell-'+objNext.x+'-'+objNext.y).animate({
-			top : ui.getPosTop(0, objFirst.y)
+		var firstX = objFirst.x,
+			firstY = objFirst.y,
+			nextX = objNext.x,
+			nextY = objNext.y,
+			firstNum = objFirst.number,
+			firstCol = objFirst.color;
+		$('#grid-cell-'+nextX+'-'+nextY).animate({
+			top : ui.getPosTop(0, firstY)
 		},200,function(){
 			// $(this).remove();
-			$('#grid-cell-'+objNext.x + '-' + objNext.y).remove();
-			$('#grid-cell-'+objFirst.x + '-' +objFirst.y)
-			.text(objFirst.number)
-			.addClass(objFirst.color).addClass('animate-new-cell');
+			$('#grid-cell-'+nextX + '-' + nextY).remove();
+			$('#grid-cell-'+firstX + '-' +firstY)
+			.text(firstNum)
+			.addClass(firstCol).addClass('animate-new-cell');
 		});
 	},
 	/*
@@ -72,10 +84,16 @@ var ui = {
 	*@callback      动画执行完毕后 在数组中删除数据
 	*/
 	moveAnimate : function (first, objNext, flag) {
-		
-		$('#grid-cell-' + objNext.x + '-' + objNext.y).animate({
-			left : ui.getPosLeft(first+flag)
-		},200).attr('id','grid-cell-' + (first+flag) +'-'+objNext.y);
+
+		var _left = ui.getPosLeft(first+flag),
+			nextX = objNext.x,
+			nextY = objNext.y;
+		$('#grid-cell-' + nextX + '-' + nextY).animate({
+			left : _left
+		},200,function(){
+			$('#grid-cell-' + nextX + '-' + nextY)
+			.attr('id','grid-cell-' + (first+flag) +'-'+nextY);
+		});
 	},
 	/*
 	*棋子移动动画
@@ -83,11 +101,17 @@ var ui = {
 	*@de            移动方向 1表示横向 0表示纵向
 	*@callback      动画执行完毕后 在数组中删除数据
 	*/
-	moveAnimateY : function (first, objNext, flag) {
-		
-		$('#grid-cell-' + objNext.x + '-' + objNext.y).animate({
-			top : ui.getPosTop(0, first+flag)
-		},200).attr('id','grid-cell-' + objNext.x +'-'+(first+flag));
+	moveAnimateY : function (first, objNext) {
+		var _top = ui.getPosTop(0, first),
+			nextX = objNext.x,
+			nextY = objNext.y;
+		$('#grid-cell-' + nextX + '-' + nextY).animate({
+			top : _top
+		},200,function(){
+			$('#grid-cell-' + nextX + '-' + nextY)
+			.attr('id','grid-cell-' + nextX + '-' + first);
+		})
+
 	},
 	/*
 	*getPosLeft() 得到棋子的左定位
