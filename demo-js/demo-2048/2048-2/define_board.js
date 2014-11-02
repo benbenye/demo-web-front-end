@@ -80,49 +80,72 @@ function Board(dimension,score,container){
 	*/
 	this.moveUp = function(){
 		// 从上向下竖向遍历从左到右
-		var tempArray = [],//临时数组用于合并棋子
-			move = false,//是否移动棋子
-			merge = 0;//合并棋子对数
+		var first ,next, move, merge = 0;//合并后的位置
 
-		for(var i = 0; i < this.dimension; ++i){
-			for(var j = 0; j < this.dimension; ++j){
-				if(this.cells[i][j]){
-					tempArray.push(this.cells[i][j]);
-					this.cells[i][j]= undefined;
-				}
-			}
-			if(tempArray.length>=1){
-				for(var m = 0; m < tempArray.length -1; ++m){
-					if(tempArray[m].number === tempArray[m+1].number){
-						tempArray[m].number = tempArray[m].number*2;
-						tempArray[m].color = 'c' + tempArray[m].number;
-						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
-						tempArray.splice(m+1,1);
-						++merge;
+		for (var m = 0; m < this.dimension; ++m) {
+
+			first = 0;
+			next = 1;	
+
+			for ( ; first < this.dimension - 1; ) {
+				next = this.findNextUp(next,m);
+
+				if( this.cells[m][first] ) {
+
+					if(next != -1){
+
+						if( this.cells[m][first].number === this.cells[m][next].number ) {
+							this.cells[m][first].number *= 2;
+							this.cells[m][first].color = 'c' + this.cells[m][first].number;
+
+							ui.mergeAnimateY(this.cells[m][first], this.cells[m][next]);
+							this.cells[m][next] = undefined;
+							++merge;
+						} else {
+							ui.moveAnimateY(this.cells[m][first].y, this.cells[m][next], 1);
+
+							if(first + 1 !== next){
+								this.cells[m][first + 1] = this.cells[m][next];
+								this.cells[m][first + 1].y = first + 1;
+								this.cells[m][next] = undefined;
+
+								move = 1;
+							}
+						}
+						++first;
+					} else {
+						break;
+					}
+					
+				} else {
+
+					if(next != -1) {
+						ui.moveAnimateY(first, this.cells[m][next], 0);
+						this.cells[m][first] = this.cells[m][next];
+						this.cells[m][first].y = first;
+						this.cells[m][next] = undefined;
+						move = 1;
+					} else {
+
+						break;
+
 					}
 				}
-				for(var n = 0; n < this.dimension; ++n){
-					this.cells[i][n] = tempArray[n];
-				}
-			}
-			//展示
-			for(var k = 0; k < this.dimension; ++k){
-				if(this.cells[i][k]){
-					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
-					if(!merge && this.cells[i][k].y != k) {
-						move = true;
-					}
-					this.cells[i][k].x=i;
-					this.cells[i][k].y=k;
-					ui.showCell(this.container, this.cells[i][k]);
-				}
-			}
-			tempArray=[];
+				++next;
+			};	
 		}
-		this.updateEmpty(merge);
 		if(move || merge){
 			this.ranCell();
 		}
+		for(var q = 0; q < this.dimension; ++q){
+			var line = '';
+			for( var w = 0; w < this.dimension; ++w){
+				line = line + ' ' + (this.cells[w][q] !== undefined? this.cells[w][q].number:0);
+			}
+			console.log(line);
+		}
+		console.log('------------');
+
 	};
 	/*
 	*键盘右方向的操作
@@ -131,13 +154,13 @@ function Board(dimension,score,container){
 		// 从右向左横向遍历
 		var first ,next, move, merge = 0;//合并后的位置
 
-		for (var m = this.dimension; m > 0; --m) {
+		for (var m = 0; m < this.dimension; ++m) {
 
-			first = this.dimension;
+			first = this.dimension - 1;
 			next = first -1;	
 
 			for ( ; first > 0; ) {
-				next = this.findNext(next,m);
+				next = this.findNextRight(next,m);
 
 				if( this.cells[first][m] ) {
 
@@ -151,17 +174,17 @@ function Board(dimension,score,container){
 							this.cells[next][m] = undefined;
 							++merge;
 						} else {
-							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],1);
+							ui.moveAnimate(this.cells[first][m].x, this.cells[next][m],-1);
 
-							if(first + 1 !== next){
-								this.cells[first + 1][m] = this.cells[next][m];
-								this.cells[first + 1][m].x = first + 1;
+							if(first - 1 !== next){
+								this.cells[first - 1][m] = this.cells[next][m];
+								this.cells[first - 1][m].x = first - 1;
 								this.cells[next][m] = undefined;
 
 								move = 1;
 							}
 						}
-						++first;
+						--first;
 					} else {
 						break;
 					}
@@ -180,14 +203,21 @@ function Board(dimension,score,container){
 
 					}
 				}
-				++next;
+				--next;
 			};	
 		}
-
-
 		if(move || merge){
 			this.ranCell();
 		}
+		for(var q = 0; q < this.dimension; ++q){
+			var line = '';
+			for( var w = 0; w < this.dimension; ++w){
+				line = line + ' ' + (this.cells[w][q] !== undefined? this.cells[w][q].number:0);
+			}
+			console.log(line);
+		}
+		console.log('------------');
+
 	};
 	/*
 	*键盘下方向的操作
@@ -251,7 +281,7 @@ function Board(dimension,score,container){
 			next = 1;	
 
 			for ( ; first < this.dimension - 1; ) {
-				next = this.findNext(next,m);
+				next = this.findNextLeft(next,m);
 
 				if( this.cells[first][m] ) {
 
@@ -299,10 +329,10 @@ function Board(dimension,score,container){
 		}
 		this.updateEmpty(merge);
 		if(move || merge){
-			var _this = this;
-			setTimeout(function() {
-				_this.ranCell();
-			}, 200);
+				this.ranCell();
+			// var _this = this;
+			// setTimeout(function() {
+			// }, 200);
 		}
 		for(var q = 0; q < this.dimension; ++q){
 			var line = '';
@@ -311,7 +341,8 @@ function Board(dimension,score,container){
 			}
 			console.log(line);
 		}
-		console.log('-----------------------');
+		console.log('------------');
+
 	};
 	/*
 	*计算游戏分数
@@ -338,9 +369,9 @@ function Board(dimension,score,container){
 	/*
 	*找到下一个不为空的位置
 	*@next    		要找下一个不为空的位置的起始坐标
-	*@i  			所在行、列 的坐标  
+	*@m  			所在行、列 的坐标  
 	*/
-	this.findNext = function(next, m) {
+	this.findNextLeft = function(next, m) {
 
 		for( ; next < this.dimension; ++next ) {
 
@@ -352,6 +383,41 @@ function Board(dimension,score,container){
 
 		return -1;
 	};
+	/*
+	*找到下一个不为空的位置
+	*@next    		要找下一个不为空的位置的起始坐标
+	*@m  			所在行、列 的坐标  
+	*/
+	this.findNextRight = function(next, m) {
+
+		for( ; next >= 0; --next ) {
+
+			if(this.cells[next][m]) {
+				return next;
+			}
+
+		};
+
+		return -1;
+	};
+	/*
+	*找到下一个不为空的位置
+	*@next    		要找下一个不为空的位置的起始坐标
+	*@m  			所在行、列 的坐标  
+	*/
+	this.findNextUp = function(next, m) {
+
+		for( ; next < this.dimension; ++next ) {
+
+			if(this.cells[m][next]) {
+				return next;
+			}
+
+		};
+
+		return -1;
+	};
+
 
 	/*
 	*合并了的无用棋子的销毁

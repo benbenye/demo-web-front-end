@@ -18,16 +18,20 @@ function newgame(){
 		*down 40*/
 		switch(e.keyCode)
 		{
-			case 37:				
+			case 37:		
+				console.log('←');		
 				board.moveLeft();
 				break;
-			case 38:				
+			case 38:	
+				console.log('↑');			
 				board.moveUp();
 				break;
 			case 39:				
+				console.log('→');			
 				board.moveRight();
 				break;
 			case 40:				
+				console.log('⬇️');			
 				board.moveDown();
 				break;
 			default :

@@ -51,6 +51,21 @@ var ui = {
 		});
 	},
 	/*
+	*合并棋子动画
+	*@obj           要合并对象
+	*/
+	mergeAnimateY : function(objFirst, objNext) {
+		$('#grid-cell-'+objNext.x+'-'+objNext.y).animate({
+			top : ui.getPosTop(0, objFirst.y)
+		},200,function(){
+			// $(this).remove();
+			$('#grid-cell-'+objNext.x + '-' + objNext.y).remove();
+			$('#grid-cell-'+objFirst.x + '-' +objFirst.y)
+			.text(objFirst.number)
+			.addClass(objFirst.color).addClass('animate-new-cell');
+		});
+	},
+	/*
 	*棋子移动动画
 	*@obj           要移动的对象
 	*@de            移动方向 1表示横向 0表示纵向
@@ -61,6 +76,18 @@ var ui = {
 		$('#grid-cell-' + objNext.x + '-' + objNext.y).animate({
 			left : ui.getPosLeft(first+flag)
 		},200).attr('id','grid-cell-' + (first+flag) +'-'+objNext.y);
+	},
+	/*
+	*棋子移动动画
+	*@obj           要移动的对象
+	*@de            移动方向 1表示横向 0表示纵向
+	*@callback      动画执行完毕后 在数组中删除数据
+	*/
+	moveAnimateY : function (first, objNext, flag) {
+		
+		$('#grid-cell-' + objNext.x + '-' + objNext.y).animate({
+			top : ui.getPosTop(0, first+flag)
+		},200).attr('id','grid-cell-' + objNext.x +'-'+(first+flag));
 	},
 	/*
 	*getPosLeft() 得到棋子的左定位
