@@ -233,49 +233,75 @@ function Board(dimension,score,container){
 	*/
 	this.moveDown = function(){
 		// 从上向下竖向遍历从左到右
-		var tempArray = [],//临时数组用于合并棋子
-			move = false,//是否移动棋子
-			merge = 0;//合并棋子对数
+		var first ,next, move, merge = 0;//合并后的位置
 
-		for(var i = 0; i < this.dimension; ++i){
-			for(var j = this.dimension - 1; j >= 0; --j){
-				if(this.cells[i][j]){
-					tempArray.push(this.cells[i][j]);
-					this.cells[i][j]= undefined;
-				}
-			}
-			if(tempArray.length >= 1){
-				for(var m = 0; m < tempArray.length -1; ++m){
-					if(tempArray[m].number === tempArray[m+1].number){
-						tempArray[m].number = tempArray[m].number*2;
-						tempArray[m].color = 'c' + tempArray[m].number;
-						$('#grid-cell-'+tempArray[m+1].x+'-'+tempArray[m+1].y).detach();
-						tempArray.splice(m+1,1);
-						++merge;
+		for (var m = 0; m < this.dimension; ++m) {
+
+			first = this.dimension;
+			next = this.dimension - 1;	
+
+			for ( ; first > 0; ) {
+				next = this.findNextDown(next,m);
+
+				if( this.cells[m][first] ) {
+
+					if(next != -1){
+
+						if( this.cells[m][first].number === this.cells[m][next].number ) {
+							this.cells[m][first].number *= 2;
+							this.cells[m][first].color = 'c' + this.cells[m][first].number;
+
+							ui.mergeAnimateY(this.cells[m][first], this.cells[m][next]);
+							this.cells[m][next] = undefined;
+							++merge;
+						} else {
+
+							if(first + 1 !== next){
+								console.log('first:'+first+';next:'+next);
+								ui.moveAnimateY(first - 1, this.cells[m][next]);
+								this.cells[m][first - 1] = this.cells[m][next];
+								this.cells[m][first - 1].y = first - 1;
+								this.cells[m][next] = undefined;
+
+								move = 1;
+							}
+						}
+						--first;
+					} else {
+						break;
+					}
+					
+				} else {
+
+					if(next != -1) {
+						console.log('first:'+first+';next:'+next);
+						ui.moveAnimateY(first, this.cells[m][next]);
+						this.cells[m][first] = this.cells[m][next];
+						this.cells[m][first].y = first;
+						this.cells[m][next] = undefined;
+						move = 1;
+					} else {
+
+						break;
+
 					}
 				}
-				for(var n = this.dimension - 1; n >= 0; --n){
-					this.cells[i][n] = tempArray[this.dimension - 1 - n];
-				}
-			}
-			//展示
-			for(var k = this.dimension - 1; k >= 0; --k){
-				if(this.cells[i][k]){
-					$('#grid-cell-'+this.cells[i][k].x+'-'+this.cells[i][k].y).detach();
-					if(!merge && this.cells[i][k].y != k) {
-						move = true;
-					}
-					this.cells[i][k].x=i;
-					this.cells[i][k].y=k;
-					ui.showCell(this.container, this.cells[i][k]);
-				}
-			}
-			tempArray=[];
+				--next;
+			};	
 		}
-		this.updateEmpty(merge);
 		if(move || merge){
-			this.ranCell();
+			var _this = this;
+			setTimeout(function() {
+				_this.ranCell();
+			}, 200);		}
+		for(var q = 0; q < this.dimension; ++q){
+			var line = '';
+			for( var w = 0; w < this.dimension; ++w){
+				line = line + ' ' + (this.cells[w][q] !== undefined? this.cells[w][q].number:0);
+			}
+			console.log(line);
 		}
+		console.log('------------');
 	};
 	/*
 	*键盘左方向的操作
@@ -428,7 +454,24 @@ function Board(dimension,score,container){
 
 		return -1;
 	};
+	/*
+	*找到下一个不为空的位置
+	*@next    		要找下一个不为空的位置的起始坐标
+	*@m  			所在行、列 的坐标  
+	*/
 
+	this.findNextDown = function(next, m){
+
+		for( ; next > 0; --next ) {
+
+			if(this.cells[m][next]) {
+				return next;
+			}
+
+		};
+
+		return -1;
+	};
 
 	/*
 	*合并了的无用棋子的销毁
