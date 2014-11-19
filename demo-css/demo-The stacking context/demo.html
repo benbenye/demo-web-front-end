@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>The stacking context</title>
+	<script src='../../demo-public/js/jquery2.js'></script>
+	<style>
+	div{border: 1px dashed #000;}
+	.box{width: 49%; height:450px; display: inline-block;border: 1px solid red;vertical-align: top;position: relative;}
+		.div1{width: 500px;height: 150px; background: #e9e9e9;}
+		.div2{width: 300px;height: 300px; background: #DB7A28;position: absolute; top: 20px; left: 120px;/*z-index:1;*/}
+		.div3{opacity: .5;background: #28DB83;}
+		
+		.opc{height: 50px;}
+		/*.opc5{margin-bottom: -20px;}*/
+		.opc9{opacity: .9;}
+		.opc-absolute{position: relative; top: -20px;}
+
+		.z-index{z-index: 1;}
+
+
+		.div4{position: relative;z-index: 4;width: 200px; height: 50px;background: #6A33F2;}
+		.div5{position: relative;z-index: 3;width: 150px; height: 50px;background: #ED5AC4;}
+		.div6{position: relative;z-index: 6;height: 50px;background: #5ABBED;}
+		.div7{opacity: .9;}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div id="div1" class="div1">#div1:<br>nothing</div>
+		<div id="div2" class="div2">#div2:<br>absolute<br>
+			在absolute，opcity都没有添加z-index属性时两者opcity级别高
+			<br>但是一旦absolute具有z-index属性，opcity不是对手
+			<br>/*z-index:1;*/
+			<button id="js-div2">点击测试z-index</button>
+		</div>
+		<div id="div3" class="div3">#div3:<br>opcity</div>
+	</div><div class="box">
+		<div class="div3 opc opc5">opcity .5 </div>
+		<div class="div3 opc opc9">opcity .5 vs .9
+			<br>虽然具有了stacking context属性，但是z-index没有作用，仍然遵循文档流
+		</div>
+
+		<p></p>
+
+		<div class="div3 opc opc5">opcity .5 </div>
+		<div class="div3 opc opc9 opc-absolute">opcity .5 vs .9
+			<br>又一遍验证example1
+		</div>
+
+	</div><div class="box">
+		<div class="div4">div4:<br>position:relative;z-index:4;</div>
+		<div class="div5">div5:<br>position:relative:z-index:3;
+			<div class="div6">div6:<br>position:relative;z-index:6;</div>
+			<div class="div7">div7:<br>opcity:.9;</div>
+			<div class="div8">div8:<br>opcity:.9;</div>
+		</div>
+	</div><div class="box"></div>
+
+	<script>
+		$('#js-div2').click(function(){
+			if($('#div2').hasClass('z-index')){
+				$('#div2').removeClass('z-index');
+			}else{
+				$('#div2').addClass('z-index');
+			}
+		});
+	</script>
+</body>
+</html>

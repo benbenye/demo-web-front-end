@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pc端 整屏翻页</title>
+	<script type="text/javascript" src="../../demo-public/js/jquery2.js"></script>
+	<script type="text/javascript" src="../../demo-public/js/jQuery.mouseWheel.js"></script>
+	<style type="text/css">
+	.content-box{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+		.full-con-a,.full-con-b,.full-con-c,.full-con-d,.full-con-e{
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.full-con-a{
+			top: 0;
+			background: red;
+		}
+		.full-con-b{
+			top: 100%;
+			background: yellow;
+		}
+		.full-con-c{
+			top: 200%;
+			background: blue;
+		}
+		.full-con-d{
+			top: 300%;
+			background: green;
+		}
+		.full-con-e{
+			top: 400%;
+			background: gray;
+		}
+	</style>
+</head>
+<body>
+	<div class="content-box js-content-box">
+		<div class="full-con-a"></div>
+		<div class="full-con-b"></div>
+		<div class="full-con-c"></div>
+		<div class="full-con-d"></div>
+		<div class="full-con-e"></div>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+
+		var FullscreenWheel = function(box){
+			this.windowWid = $(window).width();
+			this.windowHei = $(window).height();
+			this.curPage = 0;
+			if(typeof box == 'string' && $('.'+box).length){
+				FullscreenWheel.box = $('.'+box);
+			}else{
+				// 使用默认值
+				FullscreenWheel.box = $('.js-content-box');
+			}
+			FullscreenWheel.boxChildNum = FullscreenWheel.box.children().length;
+			
+		}
+
+		FullscreenWheel.prototype = {
+			constructor : FullscreenWheel,
+			init : function() {
+				// 初始化
+				FullscreenWheel.box.height(fullscreenWheel.windowHei);
+			},
+			isUpWheel : function(deltaY) {
+				// 是否可以上一页matrix(1, 0, 0, 1, 0, -380)
+				var translateY = ui.getTransform(FullscreenWheel.box).split(',');
+				translateY = parseInt(translateY[translateY.length-1]);
+
+				if(translateY === 0){
+					return false;
+				}else{
+					return true;
+				}
+			},
+			isDownWheel : function(deltaY) {
+				// 是否可以下一页matrix(1, 0, 0, 1, 0, -380)
+				console.log('d');
+				var translateY = this.ui.getTransform(FullscreenWheel.box).split(',');
+				translateY = parseInt(translateY[translateY.length-1]);
+
+				if(Math.abs(translateY/FullscreenWheel.boxChildNum) === FullscreenWheel.windowHei){
+					return false;
+				}else{
+					return true;
+				}
+			},
+			nextPage : function() {
+				console.log(curPage);
+				this.curPage += 1;
+				this.ui.setTransform(this.box, this.curPage);
+			},
+			ui : {
+				getTransform : function(obj) {
+					return obj.css('transform');
+				},
+				setTransform : function(obj, curPage) {
+					obj.css('transform','translateY(-'+(this.curPage)+'00%)');
+				}
+			}
+		};
+
+		var fullscreenWheel = new FullscreenWheel('js-content-box');
+
+		fullscreenWheel.init();
+
+		$('body').on('mousewheel',function(event, delta, deltaX, deltaY){
+			if(deltaY < 0){
+				console.log('下一页');
+				if(fullscreenWheel.isDownWheel()){
+					fullscreenWheel.nextPage();
+				}
+			}else{
+				console.log('上一页');
+				if(fullscreenWheel.isUpWheel()){
+					fullscreenWheel.prevPage();
+				}
+			}
+		});
+
+		$(window).resize(function(){
+
+		})
+
+	});
+
+
+// getScrollDeriction//获取滚动方向
+// updateWindowSize//更新窗口大小
+// setBoxTransform//设置滚动位移
+// argument：window.height,box,childrenNum,
+
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
