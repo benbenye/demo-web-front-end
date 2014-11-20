@@ -96,22 +96,24 @@
 				}
 			},
 			nextPage : function() {
+				var _this = this;
 				console.log(this.curPage);
 				this.isWheeling = true;
 				this.curPage += 1;
 				this.ui.setTransform(this.box, this.curPage);
 				setTimeout(function(){
-					this.isWheeling = false;
+					_this.isWheeling = false;
 				},900);
 				
 			},
 			prevPage : function() {
+				var _this = this;
 				console.log(this.curPage);
 				this.isWheeling = true;
 				this.curPage -= 1;
 				this.ui.setTransform(this.box, this.curPage);
 				setTimeout(function(){
-					this.isWheeling = false;
+					_this.isWheeling = false;
 				},900);
 			},
 			ui : {
