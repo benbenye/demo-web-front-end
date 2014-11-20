@@ -6,11 +6,12 @@
 	<script type="text/javascript" src="../../demo-public/js/jquery2.js"></script>
 	<script type="text/javascript" src="../../demo-public/js/jQuery.mouseWheel.js"></script>
 	<style type="text/css">
+	body{overflow: hidden;}
 	.content-box{
 		position: relative;
 		width: 100%;
 		height: 100%;
-		overflow: hidden;
+		transition: transform .9s cubic-bezier(.86, 0, .07, 1);
 	}
 		.full-con-a,.full-con-b,.full-con-c,.full-con-d,.full-con-e{
 			position: absolute;
@@ -51,29 +52,29 @@
 	<script type="text/javascript">
 	$(function(){
 
-		var FullscreenWheel = function(box){
-			this.windowWid = $(window).width();
-			this.windowHei = $(window).height();
-			this.curPage = 0;
+		function FullscreenWheel(box){
+			var _this = this;
+			_this.windowWid = $(window).width();
+			_this.windowHei = $(window).height();
+			_this.curPage = 0;
+			_this.isWheeling = false;// 一页滚动正在进行
 			if(typeof box == 'string' && $('.'+box).length){
-				FullscreenWheel.box = $('.'+box);
+				_this.box = $('.'+box);
 			}else{
 				// 使用默认值
-				FullscreenWheel.box = $('.js-content-box');
+				_this.box = $('.js-content-box');
 			}
-			FullscreenWheel.boxChildNum = FullscreenWheel.box.children().length;
-			
+
+			_this.boxChildNum = _this.box.children().length;
+			return _this;
 		}
 
 		FullscreenWheel.prototype = {
 			constructor : FullscreenWheel,
-			init : function() {
-				// 初始化
-				FullscreenWheel.box.height(fullscreenWheel.windowHei);
-			},
+
 			isUpWheel : function(deltaY) {
 				// 是否可以上一页matrix(1, 0, 0, 1, 0, -380)
-				var translateY = ui.getTransform(FullscreenWheel.box).split(',');
+				var translateY = this.ui.getTransform(this.box).split(',');
 				translateY = parseInt(translateY[translateY.length-1]);
 
 				if(translateY === 0){
@@ -85,27 +86,65 @@
 			isDownWheel : function(deltaY) {
 				// 是否可以下一页matrix(1, 0, 0, 1, 0, -380)
 				console.log('d');
-				var translateY = this.ui.getTransform(FullscreenWheel.box).split(',');
+				var translateY = this.ui.getTransform(this.box).split(',');
 				translateY = parseInt(translateY[translateY.length-1]);
 
-				if(Math.abs(translateY/FullscreenWheel.boxChildNum) === FullscreenWheel.windowHei){
+				if(Math.abs(translateY/(this.boxChildNum-1)) === this.windowHei){
 					return false;
 				}else{
 					return true;
 				}
 			},
 			nextPage : function() {
-				console.log(curPage);
+				console.log(this.curPage);
+				this.isWheeling = true;
 				this.curPage += 1;
 				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					this.isWheeling = false;
+				},900);
+				
+			},
+			prevPage : function() {
+				console.log(this.curPage);
+				this.isWheeling = true;
+				this.curPage -= 1;
+				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					this.isWheeling = false;
+				},900);
 			},
 			ui : {
 				getTransform : function(obj) {
 					return obj.css('transform');
 				},
 				setTransform : function(obj, curPage) {
-					obj.css('transform','translateY(-'+(this.curPage)+'00%)');
+					obj.css('transform','translateY(-'+(curPage)+'00%)');
 				}
+			},
+			onmousewheel : function(){
+				var _this = this;
+				this.box.on('mousewheel',function(event, delta, deltaX, deltaY){
+					console.log(_this.isWheeling);
+					if(!_this.isWheeling){
+						if(deltaY < 0){
+							console.log('下一页');
+							if( _this.isDownWheel(deltaY)){
+								_this.nextPage();
+							}
+						}else{
+							console.log('上一页');
+							if(_this.isUpWheel(deltaY)){
+								_this.prevPage();
+							}
+						}
+					}
+				});
+			},
+			init : function() {
+				// 初始化
+				this.box.height(fullscreenWheel.windowHei);
+				this.onmousewheel();
 			}
 		};
 
@@ -113,19 +152,7 @@
 
 		fullscreenWheel.init();
 
-		$('body').on('mousewheel',function(event, delta, deltaX, deltaY){
-			if(deltaY < 0){
-				console.log('下一页');
-				if(fullscreenWheel.isDownWheel()){
-					fullscreenWheel.nextPage();
-				}
-			}else{
-				console.log('上一页');
-				if(fullscreenWheel.isUpWheel()){
-					fullscreenWheel.prevPage();
-				}
-			}
-		});
+		
 
 		$(window).resize(function(){
 
