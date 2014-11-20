@@ -6,7 +6,7 @@
 	<script type="text/javascript" src="../../demo-public/js/jquery2.js"></script>
 	<script type="text/javascript" src="../../demo-public/js/jQuery.mouseWheel.js"></script>
 	<style type="text/css">
-	body{overflow: hidden;}
+	body{overflow: hidden;margin: 0; padding: 0;}
 	.content-box{
 		position: relative;
 		width: 100%;
@@ -18,6 +18,9 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
+			text-align: center;
+			font-size: 30px;
+			line-height: 200px;
 		}
 		.full-con-a{
 			top: 0;
@@ -43,11 +46,11 @@
 </head>
 <body>
 	<div class="content-box js-content-box">
-		<div class="full-con-a"></div>
-		<div class="full-con-b"></div>
-		<div class="full-con-c"></div>
-		<div class="full-con-d"></div>
-		<div class="full-con-e"></div>
+		<div class="full-con-a">第一页</div>
+		<div class="full-con-b">第二页</div>
+		<div class="full-con-c">第三页</div>
+		<div class="full-con-d">第四页</div>
+		<div class="full-con-e">第五页</div>
 	</div>
 	<script type="text/javascript">
 	$(function(){
@@ -56,7 +59,7 @@
 			var _this = this;
 			_this.windowWid = $(window).width();
 			_this.windowHei = $(window).height();
-			_this.curPage = 0;
+			_this.curPage = 1;
 			_this.isWheeling = false;// 一页滚动正在进行
 			if(typeof box == 'string' && $('.'+box).length){
 				_this.box = $('.'+box);
@@ -75,9 +78,11 @@
 			isUpWheel : function(deltaY) {
 				// 是否可以上一页matrix(1, 0, 0, 1, 0, -380)
 				var translateY = this.ui.getTransform(this.box).split(',');
-				translateY = parseInt(translateY[translateY.length-1]);
+				translateY = translateY[translateY.length-1] === 'none' ? 
+					1 : parseInt(translateY[translateY.length-1]);
+				console.log(translateY);
 
-				if(translateY === 0){
+				if(translateY === 1){
 					return false;
 				}else{
 					return true;
@@ -85,9 +90,10 @@
 			},
 			isDownWheel : function(deltaY) {
 				// 是否可以下一页matrix(1, 0, 0, 1, 0, -380)
-				console.log('d');
 				var translateY = this.ui.getTransform(this.box).split(',');
-				translateY = parseInt(translateY[translateY.length-1]);
+				translateY = translateY[translateY.length-1] === 'none' ? 
+					1 : parseInt(translateY[translateY.length-1]);
+
 
 				if(Math.abs(translateY/(this.boxChildNum-1)) === this.windowHei){
 					return false;
@@ -98,23 +104,46 @@
 			nextPage : function() {
 				var _this = this;
 				console.log(this.curPage);
-				this.isWheeling = true;
+				_this.box.off('mousewheel');
+				// this.isWheeling = true;
 				this.curPage += 1;
 				this.ui.setTransform(this.box, this.curPage);
+				// setTimeout(function(){
+				// 	_this.isWheeling = false;
+				// },900);
 				setTimeout(function(){
-					_this.isWheeling = false;
+					// _this.isWheeling = false;
+					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
 				},900);
-				
 			},
 			prevPage : function() {
 				var _this = this;
 				console.log(this.curPage);
-				this.isWheeling = true;
+				_this.box.off('mousewheel');
+				// this.isWheeling = true;
 				this.curPage -= 1;
 				this.ui.setTransform(this.box, this.curPage);
+				// setTimeout(function(){
+				// 	_this.isWheeling = false;
+				// },900);
+
 				setTimeout(function(){
-					_this.isWheeling = false;
-				},900);
+					// _this.isWheeling = false;
+					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				},1200);
+			},
+			anchorPage : function(n) {
+				var _this = this;
+				console.log(this.curPage);
+				_this.box.off('mousewheel');
+				// this.isWheeling = true;
+				this.curPage = n;
+				console.log(this.curPage);
+				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					// _this.isWheeling = false;
+					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				},1200);
 			},
 			ui : {
 				getTransform : function(obj) {
@@ -126,27 +155,68 @@
 			},
 			onmousewheel : function(){
 				var _this = this;
-				this.box.on('mousewheel',function(event, delta, deltaX, deltaY){
-					console.log(_this.isWheeling);
-					if(!_this.isWheeling){
-						if(deltaY < 0){
+				// this.box.on('mousewheel',function(event, delta, deltaX, deltaY){
+				// 	console.log(event.deltaY);
+				// 	if(!_this.isWheeling){
+				// 		if(deltaY < 0){
+				// 			console.log('下一页');
+				// 			if( _this.isDownWheel(deltaY)){
+				// 				_this.nextPage();
+				// 			}
+				// 		}else{
+				// 			console.log('上一页');
+				// 			if(_this.isUpWheel(deltaY)){
+				// 				_this.prevPage();
+				// 			}
+				// 		}
+				// 	}
+				// });
+
+				this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler);
+				
+
+			},
+			mouseWheelHandler : function(event) {
+				var deltaY = event.deltaY;
+				// if(!event.data.that.isWheeling){
+					if(deltaY < -4){
+						if(event.data.that.isDownWheel(deltaY)){
+							event.data.that.nextPage();
 							console.log('下一页');
-							if( _this.isDownWheel(deltaY)){
-								_this.nextPage();
-							}
-						}else{
+						}
+					}else if(deltaY > 4){
+						if(event.data.that.isUpWheel(deltaY)){
+							event.data.that.prevPage();
 							console.log('上一页');
-							if(_this.isUpWheel(deltaY)){
-								_this.prevPage();
-							}
 						}
 					}
-				});
+				// }
 			},
 			init : function() {
 				// 初始化
 				this.box.height(fullscreenWheel.windowHei);
+				this.anchorPage(this.getPage());
 				this.onmousewheel();
+			},
+			resizeWin : function(){
+				$(window).resize(function(){
+
+				});
+			},
+			getPage : function() {
+				// 通过锚点获得第几页
+				var _href  = window.location.href,
+					anchorArr = {
+						'filmer' : 0,
+						'magic' : 1,
+						'vmovier' : 2,
+						'cuke' : 3,
+						'noAnchor' : 0//没有通过锚点
+					};
+				_href = _href.split('#')[1] || 'noAnchor';
+
+				return anchorArr[_href];
+
 			}
 		};
 
@@ -154,11 +224,7 @@
 
 		fullscreenWheel.init();
 
-		
 
-		$(window).resize(function(){
-
-		})
 
 	});
 
