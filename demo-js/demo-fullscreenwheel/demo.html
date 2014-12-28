@@ -104,46 +104,49 @@
 			nextPage : function() {
 				var _this = this;
 				console.log(this.curPage);
-				_this.box.off('mousewheel');
-				// this.isWheeling = true;
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
 				this.curPage += 1;
 				this.ui.setTransform(this.box, this.curPage);
-				// setTimeout(function(){
-				// 	_this.isWheeling = false;
-				// },900);
 				setTimeout(function(){
-					// _this.isWheeling = false;
-					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+					_this.isWheeling = false;
 				},900);
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },900);
 			},
 			prevPage : function() {
 				var _this = this;
 				console.log(this.curPage);
-				_this.box.off('mousewheel');
-				// this.isWheeling = true;
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
 				this.curPage -= 1;
 				this.ui.setTransform(this.box, this.curPage);
-				// setTimeout(function(){
-				// 	_this.isWheeling = false;
-				// },900);
-
 				setTimeout(function(){
-					// _this.isWheeling = false;
-					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
-				},1200);
+					_this.isWheeling = false;
+				},900);
+
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },1200);
 			},
 			anchorPage : function(n) {
 				var _this = this;
 				console.log(this.curPage);
-				_this.box.off('mousewheel');
-				// this.isWheeling = true;
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
 				this.curPage = n;
 				console.log(this.curPage);
 				this.ui.setTransform(this.box, this.curPage);
 				setTimeout(function(){
-					// _this.isWheeling = false;
-					_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
-				},1200);
+					_this.isWheeling = false;
+				},900);
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },1200);
 			},
 			ui : {
 				getTransform : function(obj) {
@@ -178,7 +181,7 @@
 			},
 			mouseWheelHandler : function(event) {
 				var deltaY = event.deltaY;
-				// if(!event.data.that.isWheeling){
+				if(!event.data.that.isWheeling){
 					if(deltaY < -4){
 						if(event.data.that.isDownWheel(deltaY)){
 							event.data.that.nextPage();
@@ -190,7 +193,7 @@
 							console.log('上一页');
 						}
 					}
-				// }
+				}
 			},
 			init : function() {
 				// 初始化
@@ -223,9 +226,6 @@
 		var fullscreenWheel = new FullscreenWheel('js-content-box');
 
 		fullscreenWheel.init();
-
-
-
 	});
 
 
