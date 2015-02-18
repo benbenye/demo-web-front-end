@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pc端 整屏翻页</title>
+	<script type="text/javascript" src="../../demo-public/js/jquery2.js"></script>
+	<script type="text/javascript" src="../../demo-public/js/jQuery.mouseWheel.js"></script>
+	<style type="text/css">
+	body{overflow: hidden;margin: 0; padding: 0;}
+	.content-box{
+		position: relative;
+		width: 100%;
+		height: 100%;
+		transition: transform .9s cubic-bezier(.86, 0, .07, 1);
+	}
+		.full-con-a,.full-con-b,.full-con-c,.full-con-d,.full-con-e{
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			font-size: 30px;
+			line-height: 200px;
+		}
+		.full-con-a{
+			top: 0;
+			background: red;
+		}
+		.full-con-b{
+			top: 100%;
+			background: yellow;
+		}
+		.full-con-c{
+			top: 200%;
+			background: blue;
+		}
+		.full-con-d{
+			top: 300%;
+			background: green;
+		}
+		.full-con-e{
+			top: 400%;
+			background: gray;
+		}
+	</style>
+</head>
+<body>
+	<div class="content-box js-content-box">
+		<div class="full-con-a">第一页</div>
+		<div class="full-con-b">第二页</div>
+		<div class="full-con-c">第三页</div>
+		<div class="full-con-d">第四页</div>
+		<div class="full-con-e">第五页</div>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+
+		function FullscreenWheel(box){
+			var _this = this;
+			_this.windowWid = $(window).width();
+			_this.windowHei = $(window).height();
+			_this.curPage = 1;
+			_this.isWheeling = false;// 一页滚动正在进行
+			if(typeof box == 'string' && $('.'+box).length){
+				_this.box = $('.'+box);
+			}else{
+				// 使用默认值
+				_this.box = $('.js-content-box');
+			}
+
+			_this.boxChildNum = _this.box.children().length;
+			return _this;
+		}
+
+		FullscreenWheel.prototype = {
+			constructor : FullscreenWheel,
+
+			isUpWheel : function(deltaY) {
+				// 是否可以上一页matrix(1, 0, 0, 1, 0, -380)
+				var translateY = this.ui.getTransform(this.box).split(',');
+				translateY = translateY[translateY.length-1] === 'none' ? 
+					1 : parseInt(translateY[translateY.length-1]);
+				console.log(translateY);
+
+				if(translateY === 1){
+					return false;
+				}else{
+					return true;
+				}
+			},
+			isDownWheel : function(deltaY) {
+				// 是否可以下一页matrix(1, 0, 0, 1, 0, -380)
+				var translateY = this.ui.getTransform(this.box).split(',');
+				translateY = translateY[translateY.length-1] === 'none' ? 
+					1 : parseInt(translateY[translateY.length-1]);
+
+
+				if(Math.abs(translateY/(this.boxChildNum-1)) === this.windowHei){
+					return false;
+				}else{
+					return true;
+				}
+			},
+			nextPage : function() {
+				var _this = this;
+				console.log(this.curPage);
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
+				this.curPage += 1;
+				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					_this.isWheeling = false;
+				},900);
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },900);
+			},
+			prevPage : function() {
+				var _this = this;
+				console.log(this.curPage);
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
+				this.curPage -= 1;
+				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					_this.isWheeling = false;
+				},900);
+
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },1200);
+			},
+			anchorPage : function(n) {
+				var _this = this;
+				console.log(this.curPage);
+				// _this.box.off('mousewheel');
+				this.isWheeling = true;
+				this.curPage = n;
+				console.log(this.curPage);
+				this.ui.setTransform(this.box, this.curPage);
+				setTimeout(function(){
+					_this.isWheeling = false;
+				},900);
+				// setTimeout(function(){
+				// 	// _this.isWheeling = false;
+				// 	_this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler)
+				// },1200);
+			},
+			ui : {
+				getTransform : function(obj) {
+					return obj.css('transform');
+				},
+				setTransform : function(obj, curPage) {
+					obj.css('transform','translateY(-'+(curPage)+'00%)');
+				}
+			},
+			onmousewheel : function(){
+				var _this = this;
+				// this.box.on('mousewheel',function(event, delta, deltaX, deltaY){
+				// 	console.log(event.deltaY);
+				// 	if(!_this.isWheeling){
+				// 		if(deltaY < 0){
+				// 			console.log('下一页');
+				// 			if( _this.isDownWheel(deltaY)){
+				// 				_this.nextPage();
+				// 			}
+				// 		}else{
+				// 			console.log('上一页');
+				// 			if(_this.isUpWheel(deltaY)){
+				// 				_this.prevPage();
+				// 			}
+				// 		}
+				// 	}
+				// });
+
+				this.box.on('mousewheel',{that:_this}, _this.mouseWheelHandler);
+				
+
+			},
+			mouseWheelHandler : function(event) {
+				var deltaY = event.deltaY;
+				if(!event.data.that.isWheeling){
+					if(deltaY < -4){
+						if(event.data.that.isDownWheel(deltaY)){
+							event.data.that.nextPage();
+							console.log('下一页');
+						}
+					}else if(deltaY > 4){
+						if(event.data.that.isUpWheel(deltaY)){
+							event.data.that.prevPage();
+							console.log('上一页');
+						}
+					}
+				}
+			},
+			init : function() {
+				// 初始化
+				this.box.height(fullscreenWheel.windowHei);
+				this.anchorPage(this.getPage());
+				this.onmousewheel();
+			},
+			resizeWin : function(){
+				$(window).resize(function(){
+
+				});
+			},
+			getPage : function() {
+				// 通过锚点获得第几页
+				var _href  = window.location.href,
+					anchorArr = {
+						'filmer' : 0,
+						'magic' : 1,
+						'vmovier' : 2,
+						'cuke' : 3,
+						'noAnchor' : 0//没有通过锚点
+					};
+				_href = _href.split('#')[1] || 'noAnchor';
+
+				return anchorArr[_href];
+
+			}
+		};
+
+		var fullscreenWheel = new FullscreenWheel('js-content-box');
+
+		fullscreenWheel.init();
+	});
+
+
+// getScrollDeriction//获取滚动方向
+// updateWindowSize//更新窗口大小
+// setBoxTransform//设置滚动位移
+// argument：window.height,box,childrenNum,
+
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

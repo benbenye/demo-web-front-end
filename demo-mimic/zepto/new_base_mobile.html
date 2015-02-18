@@ -31,7 +31,15 @@ section{display: block;}
 
 .bg{position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index:1;}
 .bg .bg_sec{width: 100%;float: left;position: relative;overflow: hidden;/*min-height: 416px;*/}
-.bg01{background: #EAEBED;}.bg02{background: #468E7C;}.bg03{background: #F79536;}.bg04{background: #5FA3FF;}.bg05{background: #05BD64;}.bg06{background: #2E3A5E;}.bg07{background: #E42E2D;}.bg08{background: #282E3D;}.bg09{background: #0D0D0D;}
+.bg01{background: #EAEBED url(images/bg1.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg02{background: #468E7C url(images/bg2.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg03{background: #F79536 url(images/bg3.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg04{background: #5FA3FF url(images/bg4.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg05{background: #05BD64 url(images/bg5.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg06{background: #2E3A5E url(images/bg1.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg07{background: #E42E2D url(images/bg1.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg08{background: #282E3D url(images/bg1.jpg) center top no-repeat;background-size: 100% 100%;}
+.bg09{background: #0D0D0D url(images/bg1.jpg) center top no-repeat;background-size: 100% 100%;}
 
 .sec{z-index: 1;position: absolute;left: 0;top: 0;width: 100%;height: 100%;-webkit-transition:all 0.3s linear;-webkit-transform:translateY(0px);transition:all 0.3s linear;transform:translateY(0px);-webkit-backface-visibility:hidden;}
 .sec section{overflow: hidden;position: relative;width: 100%;/*min-height: 416px;*/z-index: 3;-webkit-backface-visibility:hidden;}
@@ -42,7 +50,6 @@ section{display: block;}
 .ico_naruto,.ico_roco,.ico_garen,.ico_tri08{background: url(images/icon03.png) no-repeat;background-size: 169px;}
 
 .sec01{overflow: hidden;z-index: 3;}
-.bg01{background: #EAEBED url(images/bg_01.jpg) center top no-repeat;background-size: 320px;}
 .sec01 span,.sec01 b{z-index: 3;position: absolute;display: block;}
 .sec01 .ico_tri01{right: 50%;margin-right: 90px;top: 10%;width: 96px;height: 57px;background-position: -2px -8.5px;}
 .sec01 .ico_tri02{left: 50%;margin-left: 80px;top: 18%;width: 64px;height: 60px;background-position: -108px -6.5px;}
@@ -308,6 +315,13 @@ section{display: block;}
   .sec09 .lookforward{padding-top: 5px;}
 #container{width:260px;height:140px;  float:left;margin:10px 20px 0 0;}
 }
+.sec01,.sec02,.sec03,.sec04,.sec05{text-align: center;}
+.content-img{width: 300px;height: 462px;vertical-align: middle;}
+.content-ref{display: inline-block; width: 0; height: 100%;vertical-align: middle;}
+.p-sec03,.tip-push-sec03{position: absolute; width: 100%;text-align: center;}
+.p-sec03.t{top: 180px;}
+.p-sec03.b{bottom: 140px;}
+.tip-push-sec03{top: 240px;}
 </style>
 </head>
 <body onLoad="init();">
@@ -316,266 +330,53 @@ section{display: block;}
 		<div class="sec">
 			<div class="bg">
 				<div class="bg_sec bg01"></div>
-				<div class="bg_sec bg02">
-					<div class="layer" data-depth="0.4"> <b aria-hidden="true" data-icon="a" class="b_a"></b> <b aria-hidden="true" data-icon="b" class="b_b"></b>
-					</div>
-					<div class="layer" data-depth="0.6">
-						<b aria-hidden="true" data-icon="c" class="b_c"></b>
-						<b aria-hidden="true" data-icon="d" class="b_d"></b>
-					</div>
-					<div class="layer" data-depth="0.8">
-						<b aria-hidden="true" data-icon="e" class="b_e"></b>
-						<b aria-hidden="true" data-icon="f" class="b_f"></b>
-					</div>
-					<div class="layer" data-depth="1">
-						<b aria-hidden="true" data-icon="g" class="b_g"></b>
-						<b aria-hidden="true" data-icon="b" class="b_h"></b>
-						<b aria-hidden="true" data-icon="d" class="b_i"></b>
-					</div>
-				</div>
-				<div class="bg_sec bg03">
-					<div class="layer" data-depth="1.2">
-						<b aria-hidden="true" data-icon="h" class="b_a"></b>
-						<b aria-hidden="true" data-icon="i" class="b_b"></b>
-						<b aria-hidden="true" data-icon="j" class="b_c"></b>
-					</div>
-				</div>
-				<div class="bg_sec bg04">
-					<div class="layer" data-depth="1.2">
-						<b aria-hidden="true" data-icon="k" class="b_a"></b>
-						<b aria-hidden="true" data-icon="l" class="b_b"></b>
-						<b aria-hidden="true" data-icon="m" class="b_c"></b>
-					</div>
-				</div>
-				<div class="bg_sec bg05">
-					<div class="layer" data-depth="1.2">
-						<b aria-hidden="true" data-icon="n" class="b_a"></b>
-						<b aria-hidden="true" data-icon="o" class="b_b"></b>
-						<b aria-hidden="true" data-icon="p" class="b_c"></b>
-					</div>
-				</div>
-				<div class="bg_sec bg06"></div>
-				<div class="bg_sec bg07">
-					<b aria-hidden="true" data-icon="v"></b>
-					<b aria-hidden="true" data-icon="v"></b>
-				</div>
-				<div class="bg_sec bg08"></div>
-				<div class="bg_sec bg09"></div>
-			</div>
-			<div class="svg">
-				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" version="1.1">
-					<line xmlns="http://www.w3.org/2000/svg" x1="50%" y1="11.25%" x2="7.81%" y2="13.74%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="7.81%" y1="13.74%" x2="90.63%" y2="25.51%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="90.63%" y1="25.51%" x2="11.56%" y2="40.35%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="11.56%" y1="40.35%" x2="82.97%" y2="53.08%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="82.97%" y1="53.08%" x2="5.16%" y2="60.83%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="5.16%" y1="60.83%" x2="90.94%" y2="75.92%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<line xmlns="http://www.w3.org/2000/svg" x1="90.94%" y1="75.92%" x2="8.43%" y2="88.9%" style="stroke:rgb(255,255,255);stroke-width:1"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="7.81%" cy="13.74%" r="4" fill="#FFF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="19%" cy="15.3%" r="5" stroke="#FFF" stroke-width="3" fill="#468E7C"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="90.63%" cy="25.51%" r="4" fill="#FFF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="78%" cy="27.9%" r="5" stroke="#FFF" stroke-width="3" fill="#F79536"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="11.56%" cy="40.35%" r="5" stroke="#FFF" stroke-width="3" fill="#5FA3FF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="51.6%" cy="47.45%" r="4" fill="#FFF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="82.97%" cy="53.08%" r="5" stroke="#FFF" stroke-width="3" fill="#05BD64"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="5.16%" cy="60.83%" r="4" fill="#FFF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="90.94%" cy="75.92%" r="4" fill="#FFF"/>
-					<circle xmlns="http://www.w3.org/2000/svg" cx="8.43%" cy="88.9%" r="4" fill="#FFF"/>
-				</svg>
+				<div class="bg_sec bg02"></div>
+				<div class="bg_sec bg03"></div>
+				<div class="bg_sec bg04"></div>
+				<div class="bg_sec bg05"></div>
 			</div>
 			<section class="sec01 sec01_show" style="display:;">
-				<h2>“爱视频”互联网影视沙龙</h2>
-				<span class="ico_up"></span>
-				<div class="layer" data-depth="0.75">
-					<span class="ico_tri01"></span>
-					<span class="ico_tri02"></span>
-					<span class="ico_tri03"></span>
-				</div>
-				<div class="layer" data-depth="1.2">
-					<span class="ico_tri04"></span>
-					<span class="ico_tri05"></span>
-					<span class="ico_tri06"></span>
-				</div>
+				<h2>new base发布会 电子邀请函</h2>
+				<img src="images/c1.png" alt="第一张" class="content-img">
+				<i class="content-ref"></i>
 				<span class="start">
 					<b aria-hidden="true" data-icon="1"></b>
 				</span>
 			</section>
 			<section class="sec02 " style="display:;">
-				<div class="p">
-					<h2>主办</h2>
-					<p>君映像文化传媒（北京）有限公司</p>
-					<p>观众网（www.iguanzhong.com）</p>
-					<p>第一期主题“网络剧的商业前景与创作方向”</p>
-
-					<p>场地支持：中发源西北盛宴</p>
-				</div>
-				<div class="data">4月12日14:00—17:00</div>
-				<span class="ico_reader">
-					<span class="ico_rea"></span>
-					<span class="ico_reader_cir"></span>
-				</span>
+				
+				<img src="images/c2.png" alt="第一张" class="content-img">
+				<i class="content-ref"></i>
 				<span class="start">
 					<b aria-hidden="true" data-icon="1"></b>
 				</span>
 			</section>
 			<section class="sec03 " style="display:;">
-				<div class="p">
-					<h2>君映像</h2>
-					<p>
-						成立于2013年11月，作为领先的互联网电影公司，致力于为投资者、商业客户和视频播出提供互联网影视内容制作和营销推广解决方案。
-					</p>
-					<p>公司创始人 宋健君导演</p>
+				<img src="images/c3.png" alt="第一张" class="content-img">
+				<i class="content-ref"></i>
+				<div class="p-sec03 t">
+					<div>德胜门后海北沿</div>
+					<div>孝友胡同12号</div>
 				</div>
-				<div class="data">4月12日14:00—17:00</div>
-				<span class="ico_comic">
-					<span class="ico_com"></span>
-					<span aria-hidden="true" data-icon="2" class="ico_comic_tri01"></span>
-					<span aria-hidden="true" data-icon="2" class="ico_comic_tri02"></span>
-				</span>
-				<div class="layer" data-depth="0.8">
-					<span class="ico_naruto"></span>
+				<div class="tip-push-sec03">长按复制地址</div>
+				<div class="p-sec03 b">
+					<div>2014年11月22日12:40</div>
+					<div>发布会开始</div>
 				</div>
 				<span class="start">
 					<b aria-hidden="true" data-icon="1"></b>
 				</span>
 			</section>
 			<section class="sec04 " style="display:;">
-				<div class="p">
-					<h2>观众网</h2>
-					<p>
-						创建于2009年3月，北京惠众天下文化传媒主办的大型社交门户网站，一开始便得到中央电视台、北京电视台等30余家国家级和地方卫视的强力支持，主要面向全国观众提供综合资讯服务的大型社交门户网站。
-					</p>
-				</div>
-				<div class="data">4月12日14:00—17:00</div>
-				<span class="ico_film">
-					<span class="ico_fil"></span>
-					<span class="ico_film_squ"></span>
-				</span>
-				<div class="layer" data-depth="0.8">
-					<span class="ico_roco"></span>
-				</div>
+				<img src="images/c4.png" alt="第一张" class="content-img">
+				<i class="content-ref"></i>
 				<span class="start">
 					<b aria-hidden="true" data-icon="1"></b>
 				</span>
 			</section>
 			<section class="sec05 " style="display:;">
-				<div class="p">
-					<h2>中发源西北盛宴</h2>
-					<p>
-						餐厅整体环境时尚、商务、温馨，拥有26间风格各异、商务韵味浓厚、文化气息深厚的包间和可容纳300人同时聚餐的多功能宴会大厅。
-					</p>
-
-				</div>
-				<div class="data">4月12日14:00—17:00</div>
-				<span class="ico_player">
-					<span class="ico_pla"></span>
-					<span aria-hidden="true" data-icon="2" class="ico_player_tri01"></span>
-					<span aria-hidden="true" data-icon="2" class="ico_player_tri02"></span>
-				</span>
-				<div class="layer" data-depth="0.8">
-					<span class="ico_garen"></span>
-				</div>
-				<span class="start">
-					<b aria-hidden="true" data-icon="1"></b>
-				</span>
-			</section>
-			<section class="sec06 " style="display:;">
-				<div class="sec06_bg"></div>
-				<div class="p">
-					<p>无论是微电影、网剧</p>
-					<p>投资人还是导演</p>
-					<p>在这里尽情沟通</p>
-					<p>打造新媒体电影投融资平台！</p>
-				</div>
-				<div class="layer" data-depth="0.2">
-					<span class="ico_reader">
-						<span class="ico_rea"></span>
-						<span class="ico_reader_cir"></span>
-					</span>
-					<span class="ico_comic">
-						<span class="ico_com"></span>
-						<span aria-hidden="true" data-icon="2" class="ico_comic_tri01"></span>
-						<span aria-hidden="true" data-icon="2" class="ico_comic_tri02"></span>
-					</span>
-				</div>
-				<div class="layer" data-depth="0.1">
-					<span class="ico_player">
-						<span class="ico_pla"></span>
-						<span aria-hidden="true" data-icon="2" class="ico_player_tri01"></span>
-						<span aria-hidden="true" data-icon="2" class="ico_player_tri02"></span>
-					</span>
-					<span class="ico_film">
-						<span class="ico_fil"></span>
-						<span class="ico_film_squ"></span>
-					</span>
-				</div>
-				<div class="layer" data-depth="0.3">
-					<span class="ico_more">
-						<b></b>
-						MORE
-					</span>
-				</div>
-				<span class="start">
-					<b aria-hidden="true" data-icon="1"></b>
-				</span>
-			</section>
-			<section class="sec07 " style="display:;">
-				<div class="p1">
-					<p>当你喜爱的小说、故事变成了</p>
-					<p>微电影、网剧</p>
-				</div>
-				<div class="p2">
-					<p>我们即是观众又是创作者，都是对新媒体电影充满热情的人们！</p>
-
-				</div>
-				<span class="ico_fans">
-					<b>Jun</b> <em></em>
-				</span>
-				<div class="layer" data-depth="1">
-					<span class="ico_tri08"></span>
-				</div>
-				<span class="start">
-					<b aria-hidden="true" data-icon="1"></b>
-				</span>
-			</section>
-			<section class="sec08 " style="display:;">
-				<div class="p">
-					<p>无论如何</p>
-					<p>一个高效的新媒体投融资平台正在开启</p>
-				</div>
-				<div class="door">
-					<span></span>
-				</div>
-				<div class="layer" data-depth="1">
-					<span class="ico_tri09"></span>
-				</div>
-				<div class="layer" data-depth="0.8">
-					<span class="ico_tri10"></span>
-				</div>
-				<div class="layer" data-depth="1.3">
-					<span class="ico_tri11"></span>
-				</div>
-				<span class="start">
-					<b aria-hidden="true" data-icon="1"></b>
-				</span>
-			</section>
-			<section class="sec09 ">
-				<h2>活动安排</h2>
-				<div class="p">
-					<span class="time">
-						April <strong>12日</strong>
-					</span>
-					<span class="addr">
-						2014年4月12日 14:00—17:00 <strong>中发源西北盛宴</strong>
-						北京市朝阳区光华路4号东方梅地亚中心C座1-3层(新央视大楼东500米；1号线D出口万达广场北侧)
-						<br>电话：400-777-9797  010-85570288 85570289</span>
-				</div>
-				<div id="container"></div>
-				<div class="lookforward">
-					<strong>敬请期待</strong>
-					“爱视频”互联网影视沙龙
-				</div>
-
+				<img src="images/c5.png" alt="第一张" class="content-img">
+				<i class="content-ref"></i>
 			</section>
 		</div>
 	</div>
