@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>array去重</title>
+</head>
+<body>
+	<script>
+		Array.prototype.uniqueBySort = function() {
+			if(this.length){
+
+				var _this = this.sort(),
+					res = [_this[0]];
+				for(var i = 0, l = _this.length; i < l; ++i){
+					if(_this[i] !== res[res.length - 1]){
+						res.push(_this[i]);
+					}
+				}
+				return res;
+			}
+		};
+
+		Array.prototype.uniqueByIndexOf = function() {
+			if(this.length){
+				var res = [];
+				for(var i = 0, l = this.length; i < l; ++i){
+					if(res.indexOf(this[i]) === -1){
+						res.push(this[i]);
+					}
+				}
+				return res;
+			}
+		};
+		Array.prototype.uniqueByHash = function(){
+			if(this.length){
+				var res = [], hash = {};
+				for(var i = 0, l = this.length; i < l; ++i){
+					if(!hash[this[i]]){
+						res.push(this[i]);
+						hash[this[i]] = true;
+					}
+				}
+				return res;
+			}
+		}
+	</script>
+</body>
+</html>
