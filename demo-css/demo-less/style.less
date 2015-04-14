@@ -1,0 +1,31 @@
+@black:          #333;
+@gray:           #ededed;
+ul,li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.padding(@wid:10px){
+	padding: @wid;
+}
+.tc(){
+	text-align: center;
+}
+.products{
+	border-left: 1px solid @gray;
+	border-bottom: 1px solid @gray;
+	border-right: 1px solid @gray;
+	.tc();
+	.product-item{
+		display: inline-block;
+		*display: inline;
+		*zoom: 1;
+		width: 25%;
+		border-left: 1px solid @gray;
+		border-top: 1px solid @gray;
+		margin-left: -1px;
+		.product-item-a{
+			display: block;
+		}
+	}
+} 
