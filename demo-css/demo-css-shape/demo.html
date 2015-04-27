@@ -11,9 +11,12 @@
 		.triangle{
 			position: relative;
 			width: 0; height: 0;
-			border-left: 50px solid transparent;
+			/*border-left: 50px solid transparent;
 			border-bottom: 100px solid #f66;
-			border-right: 50px solid transparent;
+			border-right: 50px solid transparent;*/
+			border-color: #fff100 #22ac38  #75cef6 #ea68a2;;
+			/*border-width: 50px 50px 50px 50px;*/
+			border-style: solid;
 		}
 		.triangle .tri-inner{
 			position: absolute;
@@ -78,18 +81,43 @@
     border-left: 200px solid transparent; 
 }
 	</style>
-	<div class="shape-box">
-		<div class="triangle"><div class="tri-inner"></div></div>
-		<div class="bubble-left"></div>
-		<div class="bubble-right"><span>中文中文中文</span><span class="ref"></span></div>
-		<div class="bubble-all">
-			<div class="triangle-right"></div>
-		</div>
-		<div class="bubble-all">
-			<div class="triangle-bottom"></div>
-		</div>
-		<div class="triangle-topright"></div>
-	</div>
+	<img src="../../demo-public/images/demo-shape/2.pic.jpg" alt="css三角原理示意图" width="350">
 
+	<div><span>border-top-width(0-200px)</span><input type="range" value="50" id="rangeTopColor" max="200"><span id="rangeTopColorValue"></span></div>
+	<div><span>border-right-width(0-200px)</span><input type="range" value="50" id="rangeRightColor" max="200"><span id="rangeRightColorValue"></span></div>
+	<div><span>border-bottom-width(0-200px)</span><input type="range" value="50" id="rangeBottomColor" max="200"><span id="rangeBottomColorValue"></span></div>
+	<div><span>border-left-width(0-200px)</span><input type="range" value="50" id="rangeLeftColor" max="200"><span id="rangeLeftColorValue"></span></div>
+	<div class="shape-box">
+		<div class="triangle" id="egTri"></div>
+		<div class="bubble-right"><span>中文中文中文</span><span class="ref"></span></div>
+		
+	</div>
+<script>
+	var rt = document.querySelectorAll('#rangeTopColor')[0],
+		rr = document.querySelectorAll('#rangeRightColor')[0],
+		rb = document.querySelectorAll('#rangeBottomColor')[0],
+		rl = document.querySelectorAll('#rangeLeftColor')[0],
+		st = document.querySelectorAll('#rangeTopColorValue')[0],
+		sr = document.querySelectorAll('#rangeRightColorValue')[0],
+		sb = document.querySelectorAll('#rangeBottomColorValue')[0],
+		sl = document.querySelectorAll('#rangeLeftColorValue')[0],
+		egTri = document.querySelectorAll('#egTri')[0];
+	rt.oninput = function(){
+		st.textContent = rt.value;
+		egTri.style.borderTopWidth = rt.value +'px';
+	};
+	rr.oninput = function(){
+		sr.textContent = rr.value;
+		egTri.style.borderRightWidth = rr.value +'px';
+	};
+	rb.oninput = function(){
+		sb.textContent = rb.value;
+		egTri.style.borderBottomWidth = rb.value +'px';
+	};
+	rl.oninput = function(){
+		sl.textContent = rl.value;
+		egTri.style.borderLeftWidth = rl.value +'px';
+	};
+</script>
 </body>
 </html>
